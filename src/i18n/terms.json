@@ -1,0 +1,334 @@
+{
+  "dashboard": {
+    "en-US": "dashboard",
+    "pt-BR": "painel de informações"
+  },
+  "health check": {
+    "en-US": "health check",
+    "pt-BR": "nível de saúde"
+  },
+  "workspace": {
+    "en-US": "workspace",
+    "pt-BR": "área de trabalho"
+  },
+  "flow": {
+    "en-US": "flow",
+    "pt-BR": "fluxo"
+  },
+  "agent": {
+    "en-US": "agent",
+    "pt-BR": "agente"
+  },
+  "task": {
+    "en-US": "task",
+    "pt-BR": "tarefa"
+  },
+  "analytics": {
+    "en-US": "analytics",
+    "pt-BR": "analytics"
+  },
+  "plan": {
+    "en-US": "plan",
+    "pt-BR": "plano"
+  },
+  "session": {
+    "en-US": "session",
+    "pt-BR": "sessão"
+  },
+  "audit log": {
+    "en-US": "audit log",
+    "pt-BR": "registro de auditoria"
+  },
+  "API keys": {
+    "en-US": "API keys",
+    "pt-BR": "chaves de API"
+  },
+  "team members": {
+    "en-US": "team members",
+    "pt-BR": "membros da equipe"
+  },
+  "personal information": {
+    "en-US": "personal information",
+    "pt-BR": "informações pessoais"
+  },
+  "biological gender": {
+    "en-US": "biological gender",
+    "pt-BR": "gênero biológico"
+  },
+  "first name": {
+    "en-US": "first name",
+    "pt-BR": "primeiro nome"
+  },
+  "middle name": {
+    "en-US": "middle name",
+    "pt-BR": "nome do meio"
+  },
+  "last name": {
+    "en-US": "last name",
+    "pt-BR": "último nome"
+  },
+  "username": {
+    "en-US": "username",
+    "pt-BR": "nome de usuário"
+  },
+  "birth date": {
+    "en-US": "birth date",
+    "pt-BR": "data de nascimento"
+  },
+  "email address": {
+    "en-US": "email address",
+    "pt-BR": "endereço de email"
+  },
+  "language": {
+    "en-US": "language",
+    "pt-BR": "idioma"
+  },
+  "location": {
+    "en-US": "location",
+    "pt-BR": "localização"
+  },
+  "timezone": {
+    "en-US": "time zone",
+    "pt-BR": "fuso horário"
+  },
+  "phone": {
+    "en-US": "phone",
+    "pt-BR": "telefone"
+  },
+  "staff": {
+    "en-US": "Staff",
+    "pt-BR": "Gestão"
+  },
+  "member": {
+    "en-US": "Member",
+    "pt-BR": "Membro"
+  },
+  "viewer": {
+    "en-US": "Viewer",
+    "pt-BR": "Visualizador"
+  },
+  "admin": {
+    "en-US": "admin",
+    "pt-BR": "admin"
+  },
+  "select all": {
+    "en-US": "Select All",
+    "pt-BR": "Selecionar Todos"
+  },
+  "settings.header.title": {
+    "en-US": "Settings",
+    "pt-BR": "Configurações"
+  },
+  "settings.header.subtitle": {
+    "en-US": "Manage your account, team and billing",
+    "pt-BR": "Gerencie sua conta, equipe e faturamento"
+  },
+  "settings.hub.generalTitle": {
+    "en-US": "General",
+    "pt-BR": "Geral"
+  },
+  "settings.hub.generalDesc": {
+    "en-US": "Account and workspace preferences",
+    "pt-BR": "Preferências de conta e workspace"
+  },
+  "settings.hub.teamTitle": {
+    "en-US": "Team",
+    "pt-BR": "Equipe"
+  },
+  "settings.hub.teamDesc": {
+    "en-US": "Manage team members, roles and invitations",
+    "pt-BR": "Gerencie membros, papéis e convites"
+  },
+  "settings.hub.billingTitle": {
+    "en-US": "Billing",
+    "pt-BR": "Faturamento"
+  },
+  "settings.hub.billingDesc": {
+    "en-US": "Plan, payment method and invoices",
+    "pt-BR": "Plano, forma de pagamento e faturas"
+  },
+  "settings.hub.limitsTitle": {
+    "en-US": "Limits",
+    "pt-BR": "Limites"
+  },
+  "settings.hub.limitsDesc": {
+    "en-US": "Usage limits and quotas",
+    "pt-BR": "Limites de uso e cotas"
+  },
+  "workstation.header.title": {
+    "en-US": "Workstation",
+    "pt-BR": "Estação de trabalho"
+  },
+  "workstation.header.subtitle": {
+    "en-US": "Manage your workspaces, processes and actions",
+    "pt-BR": "Gerencie seus espaços, processos e ações"
+  },
+  "workstation.workspace.header.title": {
+    "en-US": "Space",
+    "pt-BR": "Espaço"
+  },
+  "workstation.workspace.header.subtitle": {
+    "en-US": "Organize your work into spaces",
+    "pt-BR": "Organize seu trabalho em espaços"
+  },
+  "workstation.workflow.header.title": {
+    "en-US": "Process",
+    "pt-BR": "Processo"
+  },
+  "workstation.workflow.header.subtitle": {
+    "en-US": "Manage your workflows and automation processes",
+    "pt-BR": "Gerencie seus fluxos de trabalho e processos de automação"
+  },
+  "workstation.workaction.header.title": {
+    "en-US": "Action",
+    "pt-BR": "Ação"
+  },
+  "workstation.workaction.header.subtitle": {
+    "en-US": "Configure and manage your work actions and tasks",
+    "pt-BR": "Configure e gerencie suas ações e tarefas"
+  },
+  "agents.header.title": {
+    "en-US": "Agents",
+    "pt-BR": "Agentes"
+  },
+  "agents.header.subtitle": {
+    "en-US": "Manage your AI agents, models, engines and analytics",
+    "pt-BR": "Gerencie seus agentes IA, modelos, motores e analytics"
+  },
+  "agents.models.header.title": {
+    "en-US": "Models",
+    "pt-BR": "Modelos"
+  },
+  "agents.models.header.subtitle": {
+    "en-US": "Configure and manage your AI models for various tasks and workflows",
+    "pt-BR": "Configure e gerencie seus modelos IA para diversas tarefas e fluxos"
+  },
+  "agents.engine.header.title": {
+    "en-US": "Engine",
+    "pt-BR": "Motor"
+  },
+  "agents.engine.header.subtitle": {
+    "en-US": "Configure and optimize your AI engine for processing and execution",
+    "pt-BR": "Configure e otimize seu motor IA para processamento e execução"
+  },
+  "agents.analytics.header.title": {
+    "en-US": "Analytics",
+    "pt-BR": "Analytics"
+  },
+  "agents.analytics.header.subtitle": {
+    "en-US": "View analytics and performance metrics for your AI agents and workflows",
+    "pt-BR": "Visualize analytics e métricas de desempenho dos seus agentes IA e fluxos"
+  },
+  "documentation.header.title": {
+    "en-US": "Documentation",
+    "pt-BR": "Documentação"
+  },
+  "documentation.header.subtitle": {
+    "en-US": "Help and documentation resources",
+    "pt-BR": "Recursos de ajuda e documentação"
+  },
+  "documentation.introduction.header.title": {
+    "en-US": "Introduction",
+    "pt-BR": "Introdução"
+  },
+  "documentation.introduction.header.subtitle": {
+    "en-US": "Learn the basics and get started with our platform",
+    "pt-BR": "Aprenda o básico e comece a usar nossa plataforma"
+  },
+  "documentation.get-started.header.title": {
+    "en-US": "Get Started",
+    "pt-BR": "Primeiros passos"
+  },
+  "documentation.get-started.header.subtitle": {
+    "en-US": "Step-by-step guide to set up your environment and start using the platform",
+    "pt-BR": "Guia passo a passo para configurar seu ambiente e começar a usar a plataforma"
+  },
+  "documentation.tutorials.header.title": {
+    "en-US": "Tutorials",
+    "pt-BR": "Tutoriais"
+  },
+  "documentation.tutorials.header.subtitle": {
+    "en-US": "Follow our tutorials to master advanced features and workflows",
+    "pt-BR": "Siga nossos tutoriais para dominar recursos avançados e fluxos"
+  },
+  "documentation.changelog.header.title": {
+    "en-US": "Changelog",
+    "pt-BR": "Histórico de alterações"
+  },
+  "documentation.changelog.header.subtitle": {
+    "en-US": "View the latest updates, improvements and bug fixes",
+    "pt-BR": "Visualize as últimas atualizações, melhorias e correções"
+  },
+  "settings.general.header.title": {
+    "en-US": "General Settings",
+    "pt-BR": "Configurações gerais"
+  },
+  "settings.general.header.subtitle": {
+    "en-US": "Configure general account and application settings",
+    "pt-BR": "Configure as configurações gerais da conta e do aplicativo"
+  },
+  "settings.team.header.title": {
+    "en-US": "Team Settings",
+    "pt-BR": "Configurações da equipe"
+  },
+  "settings.team.header.subtitle": {
+    "en-US": "Manage team members, roles and permissions",
+    "pt-BR": "Gerencie membros, papéis e permissões da equipe"
+  },
+  "settings.billing.header.title": {
+    "en-US": "Billing",
+    "pt-BR": "Faturamento"
+  },
+  "settings.billing.header.subtitle": {
+    "en-US": "Manage your subscription, payment methods and billing history",
+    "pt-BR": "Gerencie sua assinatura, formas de pagamento e histórico de faturamento"
+  },
+  "settings.limits.header.title": {
+    "en-US": "Limits",
+    "pt-BR": "Limites"
+  },
+  "settings.limits.header.subtitle": {
+    "en-US": "View and manage your usage limits and quotas",
+    "pt-BR": "Visualize e gerencie seus limites de uso e cotas"
+  },
+  "projects.header.title": {
+    "en-US": "Projects",
+    "pt-BR": "Projetos"
+  },
+  "projects.header.subtitle": {
+    "en-US": "Organize and manage your projects",
+    "pt-BR": "Organize e gerencie seus projetos"
+  },
+  "projects.new.header.title": {
+    "en-US": "New Project",
+    "pt-BR": "Novo projeto"
+  },
+  "projects.new.header.subtitle": {
+    "en-US": "Create a new project",
+    "pt-BR": "Criar um novo projeto"
+  },
+  "projects.edit.header.title": {
+    "en-US": "Edit Project",
+    "pt-BR": "Editar projeto"
+  },
+  "projects.edit.header.subtitle": {
+    "en-US": "Update project details",
+    "pt-BR": "Atualizar detalhes do projeto"
+  },
+  "projects.resume.header.title": {
+    "en-US": "Project Report",
+    "pt-BR": "Relatório do projeto"
+  },
+  "projects.resume.header.subtitle": {
+    "en-US": "View project overview and details",
+    "pt-BR": "Visualizar visão geral e detalhes do projeto"
+  },
+  "projects.design-engineering.header.title": {
+    "en-US": "Design Engineering",
+    "pt-BR": "Engenharia de design"
+  },
+  "projects.design-engineering.header.subtitle": {
+    "en-US": "Visual inventory of UI elements with color customization",
+    "pt-BR": "Inventário visual de elementos UI com personalização de cores"
+  }
+}

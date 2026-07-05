@@ -1,0 +1,28 @@
+# Render Blueprint for Redrise.
+projects:
+  - name: Redrise
+    environments:
+      - name: production
+        services:
+          - type: web
+            name: redrise
+            runtime: node
+            repo: https://github.com/correnthgroup/redrise.git
+            branch: main
+            buildCommand: npm install && npm run build
+            startCommand: npm run start
+            autoDeployTrigger: commit
+            envVars:
+              - key: NODE_VERSION
+                value: 22
+              - key: NEXT_PUBLIC_SUPABASE_URL
+                sync: false
+              - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+                sync: false
+            headers:
+              - path: /*
+                name: X-Frame-Options
+                value: SAMEORIGIN
+              - path: /*
+                name: X-Content-Type-Options
+                value: nosniff
