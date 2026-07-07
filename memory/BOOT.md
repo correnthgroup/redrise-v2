@@ -1,80 +1,71 @@
 # BOOT
 
-> Read this first for almost every Redrise task. Use `memory/INDEX.md` for routing and the module maps for domain detail.
+Read this first for RedRise tasks.
+
+## Active Sources Of Truth
+
+- Product architecture: `docs/01_PRODUCT_ARCHITECTURE_MAP_v1.md`.
+- UI references: `docs/02_UI_BLOCKS_REFERENCE_MAP_v1.md`.
+- Roadmap: `docs/03_ROADMAP_v1.md`.
+- PRD index: `docs/04_PRD_INDEX_v1.md`.
+- Router: `AGENTS.md` and `memory/INDEX.md`.
+
+These files win over older code, graph output, migrations, or memory.
 
 ## Current Stack
 
-- App: Next.js 16 App Router with React 19 and TypeScript ~5.7.
-- Build: `next build` through `npm run build`.
-- Styling: Tailwind CSS v4 through `@tailwindcss/postcss` and oklch CSS variables.
-- UI: shadcn primitives under `src/components/ui/`, Radix, CVA, tailwind-merge, local base-nova style.
-- Backend: Supabase Auth, PostgreSQL, RLS, migrations, and Edge Functions.
-- Hosting: Render auto-deploy from `https://github.com/correnthgroup/redrise.git`.
-- Package manager: npm. Do not add `yarn.lock` or `pnpm-lock.yaml`.
+- Next.js 16 App Router, React 19, TypeScript.
+- Tailwind CSS v4.
+- shadcn primitives in `src/components/ui/`.
+- Sonner for default toast feedback.
+- Recharts for current chart UI.
+- Supabase Auth reused for foundation auth.
+- npm package manager.
+
+## Implemented Scope
+
+- Auth screens: `/sign-in`, `/sign-up`, `/forgot-password`, `/reset-password`.
+- Organization-scoped shell: `/:organizationSlug/...`.
+- App Shell, Sidebar, Breadcrumb, Notification Popover, Organization Switcher.
+- Workstation Root: `/:organizationSlug/workstation`.
+- Spaces Overview: `/:organizationSlug/workstation/spaces`.
+- Create Space Wizard and Space role assignment with typed mock data.
+
+## Current Entry Points
+
+- Root layout: `src/app/layout.tsx`.
+- Root redirect: `src/app/page.tsx`.
+- Auth domain: `src/domains/auth/`.
+- App shell: `src/components/layout/`.
+- Workstation domain: `src/domains/workstation/`.
+- Authenticated route group: `src/app/(app)/[organizationSlug]/`.
+
+## Current Invariants
+
+- Authenticated routes are organization-scoped.
+- Sidebar and breadcrumb are present on authenticated screens.
+- No visible Separator between breadcrumb/header and content.
+- Collapsed sidebar shows icons with tooltips; logo click expands it.
+- Use Dialogs/Modals, not side panels.
+- Keep Sonner visual defaults.
+- Page files compose domain components; business UI belongs in `src/domains/`.
+- Domain data must not be persisted in `localStorage`.
 
 ## Commands
 
-- Install: `npm install`.
-- Dev: `npm run dev`.
-- Build: `npm run build`.
-- Lint: `npm run lint`.
-- Typecheck: `npm run typecheck`.
-- E2E: `npm run test:e2e`.
-- Context pack: `npm run context:pack -- <topic>`.
-- Ops MCP: `npm run mcp:redrise-ops`.
-- Graph update: `python -m graphify update . --force`.
+```bash
+npm install
+npm run dev
+npm run build
+npm run start
+npm run lint
+npm run typecheck
+npm run test:e2e
+python -m graphify update . --force
+```
 
-## Sources Of Truth
+## Known Blockers
 
-- Auth session: Supabase Auth.
-- Profile: Supabase `profiles` via `src/lib/user-profile.ts`.
-- Active sessions: Supabase `active_sessions`.
-- Team members: Supabase `team_members` via `src/lib/team-members.ts`.
-- Workspaces: Supabase via `src/lib/workspaces.ts`.
-- Flows: Supabase via `src/lib/flows.ts`.
-- Tasks: Supabase via `src/lib/tasks.ts`.
-- Agents: Supabase via `src/lib/agents.ts`.
-- Billing: Supabase `billing_subscriptions` plus Stripe Edge Functions.
-- Notifications: Supabase Realtime via `src/lib/notifications.ts`.
-
-## Critical Rules
-
-- `localStorage` is allowed only for UI preferences such as sidebar collapse and public auth language.
-- Do not persist profile, session, team, workspace, project, flow, task, agent, or billing data in `localStorage`.
-- Member pickers must load Settings > Team Members through `loadTeamMembers()` or `useTeamMemberOptions()`.
-- Plans UI must not unlock paid behavior from frontend-only state.
-- Supabase migrations are append-only when prior behavior may already be applied remotely.
-- No external CDN assets; use local assets or `data:` URIs.
-- Keep technical files in EN-US unless the file is explicitly human-facing PT-BR memory.
-
-## Current Product State
-
-- Public auth uses Supabase e-mail/password, no real OAuth, no e-mail confirmation UI.
-- Sign Up sends `full_name`, `language`, and optional `invite_token`, then returns to Sign In.
-- Authenticated dashboard routes use a server-side Supabase guard.
-- Sidebar groups are Workstation, Agents, Documentation, and Settings.
-- Settings is a single accordion page with Profile, Team, Notification, and Integration sections.
-- Billing foundation exists, but live paid checkout depends on configured Stripe secrets and webhook.
-- Agents execute Tasks only; they do not create or alter Workspaces, Flows, or orchestration.
-
-## Current Blockers
-
-- Global `npm run lint` may include broad pre-existing baseline issues outside targeted changes.
-- Supabase migration `047_auth_full_name_language_contract.sql` exists locally and still needs remote application if not already pushed.
-- Graph semantic extraction remains optional and pending without `GEMINI_API_KEY` or `GOOGLE_API_KEY`.
-
-## Project Refs
-
-- Owner: Correnth Group.
-- Operational account: `integration@correnth.com`.
-- Production URL: `https://www.redrise.app`.
-- Supabase project ref: `vsaropewydcjsvplpugx`.
-- Render service: `redrise` in project/workspace `Redrise`.
-- GitHub repository: `https://github.com/correnthgroup/redrise.git`.
-
-## Context And Graph Updates
-
-- Use `memory/INDEX.md` to choose module maps and graph queries.
-- Update affected memory files after code, schema, command, product, architecture, permission, billing, or deploy changes.
-- Update `memory/TASK_LOG.md` with validation and blockers before finishing relevant work.
-- Run `python -m graphify update . --force` after relevant structural or behavior changes when feasible.
+- Full graph rebuild needs an LLM API key; structural graph update works without it.
+- Final Supabase business persistence for Spaces/Workstation is pending.
+- Legacy backend artifacts remain preserved until cleanup PRD.

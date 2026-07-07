@@ -1,0 +1,41 @@
+"use client"
+
+import type { ReactNode } from "react"
+
+import { AppBreadcrumb } from "@/components/layout/app-breadcrumb"
+import { AppSidebar } from "@/components/layout/app-sidebar"
+import type { ActiveOrganization } from "@/components/layout/organization-switcher"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar"
+
+type AppShellProps = {
+  children: ReactNode
+  organizationSlug: string
+}
+
+export function AppShell({ children, organizationSlug }: AppShellProps) {
+  const activeOrganization: ActiveOrganization = {
+    name: "My Business",
+    slug: organizationSlug,
+    plan: "Free",
+    role: "Owner",
+  }
+
+  return (
+    <SidebarProvider>
+      <AppSidebar organizationSlug={organizationSlug} activeOrganization={activeOrganization} />
+      <SidebarInset>
+        <header className="flex h-14 shrink-0 items-center gap-3 px-4 md:px-6">
+          <SidebarTrigger className="md:hidden" />
+          <AppBreadcrumb />
+        </header>
+        <main className="flex flex-1 flex-col gap-6 px-4 pb-8 md:px-6 lg:px-8">
+          {children}
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}

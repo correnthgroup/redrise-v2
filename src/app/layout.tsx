@@ -1,8 +1,7 @@
 import type { Metadata } from "next"
 import { Geist } from "next/font/google"
 import "./globals.css"
-import { I18nProvider } from "@/components/providers/i18n-context"
-import { Sonner } from "@/components/ui/sonner"
+import { AppProviders } from "@/components/providers/app-providers"
 
 const geist = Geist({
   subsets: ["latin"],
@@ -22,10 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.variable} antialiased`}>
-        <I18nProvider>
+        <AppProviders>
           {children}
-        </I18nProvider>
-        <Sonner />
+        </AppProviders>
       </body>
     </html>
   )
