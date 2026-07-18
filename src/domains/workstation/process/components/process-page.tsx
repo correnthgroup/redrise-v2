@@ -1,8 +1,11 @@
+"use client"
+
+import { useWorkstation } from "@/domains/workstation/core/workstation-provider"
 import { CreateProcessDialog } from "@/domains/workstation/process/dialogs/create-process-dialog"
-import { mockProcesses } from "@/domains/workstation/process/data/mock-processes"
 import { ProcessTable } from "@/domains/workstation/process/components/process-table"
 
 export function ProcessPage({ organizationSlug }: { organizationSlug: string }) {
+  const { snapshot } = useWorkstation()
   return (
     <section className="grid gap-6">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
@@ -15,7 +18,7 @@ export function ProcessPage({ organizationSlug }: { organizationSlug: string }) 
         </div>
         <CreateProcessDialog />
       </div>
-      <ProcessTable processes={mockProcesses} organizationSlug={organizationSlug} />
+      <ProcessTable processes={[...snapshot.processes]} organizationSlug={organizationSlug} />
     </section>
   )
 }

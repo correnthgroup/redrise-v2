@@ -5,6 +5,7 @@ import { RefreshCcwIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { Button } from "@/components/ui/button"
+import { useWorkstation } from "@/domains/workstation/core/workstation-provider"
 import { ActionDetailsDialog } from "@/domains/workstation/actions/components/action-details-dialog"
 import { ActionsFilters, defaultActionFilters } from "@/domains/workstation/actions/components/actions-filters"
 import { ActionsKanban } from "@/domains/workstation/actions/components/actions-kanban"
@@ -12,19 +13,18 @@ import { RunHistoryTable } from "@/domains/workstation/actions/components/run-hi
 import {
   filterActions,
   filterProcessRuns,
-  mockActionNodeRuns,
-  mockProcessRuns,
-} from "@/domains/workstation/actions/data/mock-actions"
+} from "@/domains/workstation/core/selectors"
 import type { ActionFilters, ActionNodeRun } from "@/domains/workstation/actions/types/action.types"
 
 export function ActionsPage({ organizationSlug }: { organizationSlug: string }) {
+  const { snapshot, runtime, can } = useWorkstation()
   const [filters, setFilters] = React.useState<ActionFilters>(defaultActionFilters)
   const [selectedAction, setSelectedAction] = React.useState<ActionNodeRun | null>(null)
   const [detailsOpen, setDetailsOpen] = React.useState(false)
   const [lastUpdated, setLastUpdated] = React.useState("Just now")
 
-  const filteredActions = React.useMemo(() => filterActions(mockActionNodeRuns, filters), [filters])
-  const filteredRuns = React.useMemo(() => filterProcessRuns(mockProcessRuns, mockActionNodeRuns, filters), [filters])
+  const filteredActions = React.useMemo(() => filterActions([...snapshot.nodeRuns], filters), [filters, snapshot.nodeRuns])
+  const filteredRuns = React.useMemo(() => filterProcessRuns([...snapshot.processRuns], [...snapshot.nodeRuns], filters), [filters, snapshot.nodeRuns, snapshot.processRuns])
 
   const handleViewDetails = React.useCallback((action: ActionNodeRun) => {
     setSelectedAction(action)
@@ -34,7 +34,7 @@ export function ActionsPage({ organizationSlug }: { organizationSlug: string }) 
   function handleRefresh() {
     setLastUpdated(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))
     toast.success("Actions refreshed.", {
-      description: "Realtime wiring is mocked in this PRD; manual refresh updates the timestamp only.",
+      description: "The view is already subscribed to the in-memory runtime; this timestamp confirms the current snapshot.",
     })
   }
 
@@ -55,10 +55,10 @@ export function ActionsPage({ organizationSlug }: { organizationSlug: string }) 
         </Button>
       </div>
 
-      <ActionsFilters filters={filters} onFiltersChange={setFilters} />
+      <ActionsFilters filters={filters} onFiltersChange={setFilters} spaces={snapshot.spaces} processes={snapshot.processes} />
       <ActionsKanban actions={filteredActions} onViewDetails={handleViewDetails} />
       <RunHistoryTable runs={filteredRuns} nodeRuns={filteredActions} organizationSlug={organizationSlug} onViewAction={handleViewDetails} />
-      <ActionDetailsDialog action={selectedAction} open={detailsOpen} onOpenChange={setDetailsOpen} />
+      <ActionDetailsDialog action={selectedAction} open={detailsOpen} onOpenChange={setDetailsOpen} onRetry={async (action) => { if (!can("run.retry", action.spaceId)) return void toast.error("You do not have permission to retry this Run."); try { await runtime.retryNodeRun(action.id); toast.success("Retry started as a new auditable attempt."); setDetailsOpen(false) } catch (error) { toast.error(error instanceof Error ? error.message : "Could not retry Run.") } }} />
     </section>
   )
 }

@@ -50,10 +50,7 @@ export function AppSidebar({ organizationSlug, activeOrganization, ...props }: A
     [pathname, routes],
   )
   const [openRouteTitles, setOpenRouteTitles] = React.useState<string[]>(activeRouteTitles)
-
-  React.useEffect(() => {
-    setOpenRouteTitles((current) => Array.from(new Set([...current, ...activeRouteTitles])))
-  }, [activeRouteTitles])
+  const resolvedOpenRouteTitles = React.useMemo(() => Array.from(new Set([...openRouteTitles, ...activeRouteTitles])), [activeRouteTitles, openRouteTitles])
 
   function handleLogoClick(event: React.MouseEvent) {
     if (state === "collapsed") {
@@ -108,7 +105,7 @@ export function AppSidebar({ organizationSlug, activeOrganization, ...props }: A
                 return (
                   <Collapsible
                     key={route.title}
-                    open={openRouteTitles.includes(route.title)}
+                    open={resolvedOpenRouteTitles.includes(route.title)}
                     onOpenChange={(open) => {
                       setOpenRouteTitles((current) => open
                         ? Array.from(new Set([...current, route.title]))

@@ -26,6 +26,7 @@ export type SpaceMember = {
 
 export type Space = {
   id: string
+  organizationId?: string
   name: string
   description: string
   membersCount: number
@@ -35,6 +36,10 @@ export type Space = {
   lastActivity: string
   status: "Active" | "Draft" | "Archived"
   members: SpaceMember[]
+  createdAt?: string
+  updatedAt?: string
+  createdBy?: string
+  updatedBy?: string
 }
 
 export type SpaceUsageCard = {

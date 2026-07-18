@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext } from "react"
+import { createContext } from "react"
 import { t as translate, type Locale } from "@/lib/i18n"
 
 type I18nContextValue = {

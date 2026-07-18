@@ -30,10 +30,9 @@ export const TEST_PASSWORD = 'Abcw1010@'
 export default async function globalSetup() {
   if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
     console.log('[global-setup] Missing env vars; skipping user creation')
-    console.log('[global-setup] Ensure test user exists: test@redrise.app / TestPass123!')
+    console.log('[global-setup] Configure E2E_TEST_EMAIL and E2E_TEST_PASSWORD with a confirmed test account')
     return
   }
 
-  console.log('[global-setup] NOTE: Create test user manually in Supabase Dashboard if not exists')
-  console.log('[global-setup] Email:', TEST_EMAIL, '/ Password:', TEST_PASSWORD)
+  console.log('[global-setup] Supabase admin environment detected; test account provisioning remains external')
 }

@@ -49,6 +49,9 @@ export type RedRiseProcess = {
   actionsCount: number
   lastRun: string
   updatedAt: string
+  createdAt?: string
+  createdBy?: string
+  updatedBy?: string
 }
 
 export type RedRiseNode = {
@@ -102,4 +105,6 @@ export type NodeRun = {
   errorMessage?: string
   startedAt?: string
   completedAt?: string
+  attempt?: number
+  retriedFromNodeRunId?: string
 }

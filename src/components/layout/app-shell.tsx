@@ -5,6 +5,7 @@ import type { ReactNode } from "react"
 import { AppBreadcrumb } from "@/components/layout/app-breadcrumb"
 import { AppSidebar } from "@/components/layout/app-sidebar"
 import type { ActiveOrganization } from "@/components/layout/organization-switcher"
+import { WorkstationProvider } from "@/domains/workstation/core/workstation-provider"
 import {
   SidebarInset,
   SidebarProvider,
@@ -25,7 +26,8 @@ export function AppShell({ children, organizationSlug }: AppShellProps) {
   }
 
   return (
-    <SidebarProvider>
+    <WorkstationProvider organizationSlug={organizationSlug}>
+      <SidebarProvider>
       <AppSidebar organizationSlug={organizationSlug} activeOrganization={activeOrganization} />
       <SidebarInset>
         <header className="flex h-14 shrink-0 items-center gap-3 px-4 md:px-6">
@@ -36,6 +38,7 @@ export function AppShell({ children, organizationSlug }: AppShellProps) {
           {children}
         </main>
       </SidebarInset>
-    </SidebarProvider>
+      </SidebarProvider>
+    </WorkstationProvider>
   )
 }

@@ -2,66 +2,64 @@
 
 ## Status
 
-Active roadmap through WS-ACTIONS.
+The Workstation in-memory reference implementation is the active milestone. RedScale does not exist in RedRise. CML is an external Correnth platform; Graphify remains responsible for repository-specific context.
 
 ## Completed
 
-### Block 1 - Foundation
+### Foundation and shell
 
 - PRD-000 Foundation Architecture.
 - PRD-001 Auth UI Blocks and Supabase Auth foundation.
 - PRD-003 App Shell Navigation.
 - PRD-004 Organization Selector.
 - PRD-005 Notification Bell Base.
-- Authenticated skeleton routes.
 
-### Block 2 - Workstation Root + Spaces
+### Functional Workstation reference
 
-- PRD-014 Workstation Root Overview.
-- PRD-015 Spaces List.
-- PRD-016 Create Space Wizard.
-- PRD-017 Space Members and Space Roles.
+- PRD-014 through PRD-023.
+- Async ports: WorkstationRepository, ExecutionRuntime, and AuthorizationPolicy.
+- Observable WorkstationStore through the application provider.
+- Fixture-backed InMemoryWorkstationAdapter, with no localStorage.
+- Space create, edit, archive, member assignment, and Space Roles.
+- Process create, activate, pause, archive, and manual execution.
+- Node create, configure, move, connect, duplicate, and delete.
+- Deterministic Plan -> Prepare -> Execute -> Result simulation.
+- Actions and dashboard metrics derived from actual in-memory Runs.
+- Audit-preserving retry with attempt and retriedFromNodeRunId.
+- Capability-aware menus and internal Sonner denial feedback.
 
-### Block 3 - Workstation Process
+### RedScale and embedded CML cleanup
 
-- WS-PROCESS-LIST.
-- WS-PROCESS-CREATE.
-- WS-PROCESS-CANVAS.
+- RedScale and Context Memory navigation removed.
+- Embedded routes, APIs, MCP, ingestion, domain code, tests, and migrations 048-053 removed.
+- Historical task records preserved with a supersession note.
+- The only allowed product integration is a thin server-side adapter for the official external SDK.
 
-### Block 4 - Workstation Actions
+## Current validation baseline
 
-- WS-ACTIONS.
+- npm run lint
+- npm run typecheck
+- unit/integration tests
+- npm run build
+- npm run test:e2e
+- python -m graphify update . --force
 
-## Current Validation Baseline
+## Next milestone
 
-- `npm run typecheck` must pass.
-- `npm run build` must pass.
-- `python -m graphify update . --force` should run after structural changes when feasible.
+Implement durable adapters without rewriting the UI:
 
-## Next Allowed Scope
+- New organization-scoped Supabase/PostgreSQL migrations.
+- RLS equivalent to the capability matrix.
+- Supabase implementation of WorkstationRepository.
+- Durable runtime with outbox/worker, idempotency, audit, cancellation, and recovery.
+- Realtime Actions projection.
+- Server-only CML adapter using @correnth/context-memory/sdk@1.x after the package is available.
 
-Next block should start after WS-ACTIONS and may cover Node configuration depth, realtime runtime, or Agents only if explicitly requested.
+Until then, the in-memory adapter is the executable behavioral reference.
 
-## Not Implemented Yet
+## Out of scope for RedRise
 
-- WS-NODE-CREATE.
-- WS-NODE-CONFIG.
-- WS-TRIGGER-CONFIG.
-- WS-NODE-RUNS.
-- WS-ACTIONS-REALTIME.
-- WS-ACTIONS-RETRY.
-- AGENTS-MODELS.
-- AGENTS-ENGINE.
-- AGENTS-ANALYTICS.
-- SETTINGS-PROFILE.
-- SETTINGS-TEAM.
-- SETTINGS-NOTIFICATION.
-- SETTINGS-INTEGRATION.
-- DOCUMENTATION final content.
-- PROJECTS final flows.
-- SUPPORT final persistence.
-- FEEDBACKS final persistence.
-
-## Cleanup Requirement
-
-A late cleanup PRD must remove backend, docs, memory, migrations, queries, functions, and UI code that remain unused after the v1 architecture is implemented.
+- RedScale.
+- Local CML persistence, embeddings, retrieval, administration, or fallback.
+- Product-specific content in the global CML corpus.
+- Domain persistence in localStorage.

@@ -8,7 +8,7 @@ export const createSpaceSchema = z.object({
   members: z.array(z.object({
     memberId: z.string().min(1),
     role: z.enum(spaceRoles),
-  })).default([]),
+  })),
 })
 
 export const addSpaceMemberSchema = z.object({

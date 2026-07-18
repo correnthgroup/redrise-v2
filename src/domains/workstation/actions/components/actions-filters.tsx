@@ -5,7 +5,6 @@ import { RotateCcwIcon, SearchIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { actionProcesses, actionSpaces } from "@/domains/workstation/actions/data/mock-actions"
 import type { ActionFilters } from "@/domains/workstation/actions/types/action.types"
 
 export const defaultActionFilters: ActionFilters = {
@@ -19,9 +18,13 @@ export const defaultActionFilters: ActionFilters = {
 export function ActionsFilters({
   filters,
   onFiltersChange,
+  spaces,
+  processes,
 }: {
   filters: ActionFilters
   onFiltersChange: (filters: ActionFilters) => void
+  spaces: ReadonlyArray<{ id: string; name: string }>
+  processes: ReadonlyArray<{ id: string; name: string }>
 }) {
   function updateFilter(key: keyof ActionFilters, value: string) {
     onFiltersChange({ ...filters, [key]: value })
@@ -42,14 +45,14 @@ export function ActionsFilters({
         <SelectTrigger className="w-full"><SelectValue placeholder="Space" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Spaces</SelectItem>
-          {actionSpaces.map((space) => <SelectItem key={space.id} value={space.id}>{space.name}</SelectItem>)}
+          {spaces.map((space) => <SelectItem key={space.id} value={space.id}>{space.name}</SelectItem>)}
         </SelectContent>
       </Select>
       <Select value={filters.processId} onValueChange={(value) => updateFilter("processId", value ?? "all")}>
         <SelectTrigger className="w-full"><SelectValue placeholder="Process" /></SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Processes</SelectItem>
-          {actionProcesses.map((process) => <SelectItem key={process.id} value={process.id}>{process.name}</SelectItem>)}
+          {processes.map((process) => <SelectItem key={process.id} value={process.id}>{process.name}</SelectItem>)}
         </SelectContent>
       </Select>
       <Select value={filters.status} onValueChange={(value) => updateFilter("status", value ?? "all")}>

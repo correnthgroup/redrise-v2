@@ -11,12 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
-    "test:unit": "node --test tests/unit/*.test.mjs",
-    "ingest:ctx": "node scripts/ingest-markdown.mjs",
-    "reindex:ctx": "node scripts/ingest-markdown.mjs",
-    "mcp:context": "node scripts/mcp/correnth-context.mjs",
-    "mcp:context:self-test": "node scripts/mcp/correnth-context.mjs --self-test",
-    "context:pack": "node scripts/context-pack.mjs",
+    "test:unit": "vitest run",
     "mcp:redrise-ops": "node scripts/mcp/redrise-ops.mjs",
     "mcp:redrise-ops:self-test": "node scripts/mcp/redrise-ops.mjs --self-test"
   },
@@ -26,6 +21,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@hookform/resolvers": "^5.4.0",
     "@radix-ui/react-alert-dialog": "^1.1.16",
     "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-checkbox": "^1.3.3",
@@ -57,6 +53,7 @@
     "react": "19.2.4",
     "react-day-picker": "^10.0.1",
     "react-dom": "19.2.4",
+    "react-hook-form": "^7.82.0",
     "react-is": "^19.2.7",
     "recharts": "^3.8.0",
     "sonner": "^2.0.7",
@@ -83,6 +80,7 @@
     "jsdom": "^29.1.1",
     "shadcn": "^4.12.0",
     "tailwindcss": "^4",
-    "typescript": "~5.7.0"
+    "typescript": "~5.7.0",
+    "vitest": "^4.1.10"
   }
 }

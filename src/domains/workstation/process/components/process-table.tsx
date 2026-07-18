@@ -30,6 +30,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useWorkstation } from "@/domains/workstation/core/workstation-provider"
 import { DataTableColumnHeader } from "@/domains/workstation/components/data-table-column-header"
 import { DataTablePagination } from "@/domains/workstation/components/data-table-pagination"
 import { DataTableViewOptions } from "@/domains/workstation/components/data-table-view-options"
@@ -54,7 +55,7 @@ const columnLabels: Record<string, string> = {
   updatedAt: "Updated",
 }
 
-function getColumns(organizationSlug: string): ColumnDef<RedRiseProcess>[] {
+function getColumns(organizationSlug: string, onRun: (process: RedRiseProcess) => void, onEdit: (process: RedRiseProcess) => void, onStatus: (process: RedRiseProcess, status: ProcessStatus) => void, canManage: (process: RedRiseProcess) => boolean, canRun: (process: RedRiseProcess) => boolean): ColumnDef<RedRiseProcess>[] {
   return [
     {
       id: "select",
@@ -142,10 +143,11 @@ function getColumns(organizationSlug: string): ColumnDef<RedRiseProcess>[] {
                   <RouteIcon />
                   Open canvas
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast("Process details are mocked for this PRD.")}>View details</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => toast("Edit will be wired with persistence and RBAC.")}>Edit</DropdownMenuItem>
+                {canRun(process) ? <DropdownMenuItem onClick={() => onRun(process)}>Run now</DropdownMenuItem> : null}
+                {canManage(process) ? <DropdownMenuItem onClick={() => onEdit(process)}>Edit</DropdownMenuItem> : null}
+                {canManage(process) ? <DropdownMenuItem onClick={() => onStatus(process, process.status === "active" ? "paused" : "active")}>{process.status === "active" ? "Pause" : "Activate"}</DropdownMenuItem> : null}
                 <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive" onClick={() => toast("Archive is blocked until Process persistence is implemented.")}>Archive</DropdownMenuItem>
+                {canManage(process) ? <DropdownMenuItem variant="destructive" onClick={() => onStatus(process, "archived")}>Archive</DropdownMenuItem> : null}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -156,11 +158,44 @@ function getColumns(organizationSlug: string): ColumnDef<RedRiseProcess>[] {
 }
 
 export function ProcessTable({ processes, organizationSlug }: { processes: RedRiseProcess[]; organizationSlug: string }) {
+  const { repository, runtime, can } = useWorkstation()
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
-  const columns = React.useMemo(() => getColumns(organizationSlug), [organizationSlug])
+  const columns = React.useMemo(() => getColumns(
+    organizationSlug,
+    async (process) => {
+      try {
+        await runtime.startProcess(process.id)
+        toast.success("Process Run started.", { description: "Follow its deterministic stages in Actions." })
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Could not start Process.")
+      }
+    },
+    async (process) => {
+      const name = window.prompt("Process name", process.name)?.trim()
+      if (!name) return
+      const description = window.prompt("Process description", process.description)?.trim()
+      if (!description) return
+      try {
+        await repository.updateProcess(process.id, { name, description, owner: process.owner, frequency: process.frequency })
+        toast.success("Process updated.")
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Could not edit Process.")
+      }
+    },
+    async (process, status) => {
+      try {
+        await repository.setProcessStatus(process.id, status)
+        toast.success("Process status updated to " + status + ".")
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Could not update Process.")
+      }
+    },
+    (process) => can("process.manage", process.spaceId),
+    (process) => can("process.run", process.spaceId),
+  ), [can, organizationSlug, repository, runtime])
 
   const table = useReactTable({
     data: processes,
@@ -192,7 +227,7 @@ export function ProcessTable({ processes, organizationSlug }: { processes: RedRi
       <CardHeader className="gap-3 md:flex-row md:items-center md:justify-between">
         <div className="grid gap-1.5">
           <CardTitle>Process List</CardTitle>
-          <CardDescription>Mocked processes with table-02 behavior and TanStack controls.</CardDescription>
+          <CardDescription>Session-backed Processes with runtime and capability-aware actions.</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="grid gap-4">

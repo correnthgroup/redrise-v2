@@ -2,7 +2,22 @@
 
 ## Status
 
-Active architecture baseline through Workstation Root, Spaces, Process, and Actions.
+Active architecture baseline through the functional in-memory Workstation reference.
+
+## Platform boundary
+
+- RedScale does not exist in RedRise.
+- CML is an external shared Correnth platform and never a RedRise administration domain.
+- RedRise may access global context only through the official server-side SDK with product identity and context.read.
+- Graphify owns repository-specific code/document relationships and short-lived product context.
+- CML outages are explicit; RedRise must not create local retrieval, embeddings, or database fallbacks.
+- Customer-specific or sensitive content is denied from the global corpus by default.
+
+## Workstation execution architecture
+
+UI components -> WorkstationProvider/Store -> async ports -> InMemoryWorkstationAdapter.
+
+The in-memory adapter is the executable reference for CRUD, capabilities, runtime transitions, Actions projections, and retry. Supabase/PostgreSQL and the durable runtime are the next adapters.
 
 ## Product Vision
 
@@ -55,12 +70,12 @@ App Shell / :organizationSlug
 | AUTH-FORGOT | Implemented | `/forgot-password` |
 | AUTH-RESET | Implemented | `/reset-password` |
 | APP-SHELL | Implemented | `/:organizationSlug/*` |
-| WS-ROOT | Implemented with typed mock data | `/:organizationSlug/workstation` |
-| WS-SPACES | Implemented with typed mock data | `/:organizationSlug/workstation/spaces` |
-| WS-PROCESS-LIST | Implemented with typed mock data | `/:organizationSlug/workstation/process` |
-| WS-PROCESS-CREATE | Implemented with typed mock data | `/:organizationSlug/workstation/process` |
-| WS-PROCESS-CANVAS | Implemented with typed mock data | `/:organizationSlug/workstation/process/:processId/canvas` |
-| WS-ACTIONS | Implemented with typed mock data | `/:organizationSlug/workstation/actions` |
+| WS-ROOT | Functional with in-memory adapter | `/:organizationSlug/workstation` |
+| WS-SPACES | Functional with in-memory adapter | `/:organizationSlug/workstation/spaces` |
+| WS-PROCESS-LIST | Functional with in-memory adapter | `/:organizationSlug/workstation/process` |
+| WS-PROCESS-CREATE | Functional with in-memory adapter | `/:organizationSlug/workstation/process` |
+| WS-PROCESS-CANVAS | Functional with in-memory adapter | `/:organizationSlug/workstation/process/:processId/canvas` |
+| WS-ACTIONS | Functional with in-memory adapter | `/:organizationSlug/workstation/actions` |
 
 Skeleton route coverage exists for Agents, Documentation, Settings, Projects, Support, and Feedbacks.
 

@@ -59,6 +59,8 @@ export type ActionNodeRun = {
   failedStage?: ActionStage
   suggestedNextAction?: string
   metadata: Record<string, unknown>
+  attempt?: number
+  retriedFromNodeRunId?: string
 }
 
 export type ActionFilters = {

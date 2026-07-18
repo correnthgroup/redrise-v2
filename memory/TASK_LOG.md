@@ -1,5 +1,35 @@
 # TASK_LOG
 
+## 2026-07-18 - RedScale and embedded CML superseded
+
+- RedScale is not part of RedRise. Paperclip owns agent orchestration for the Correnth group.
+- The embedded CML prototype recorded below is historical and non-canonical; its runtime, UI, routes, scripts, and migrations were removed from RedRise after checkpoint commit 40faeda.
+- Shared global context is provided by the independent Correnth CML through its versioned API/SDK. Product-specific documentation remains in each repository and is queried through Graphify.
+- Short-term task memory remains ephemeral and customer-specific data is excluded from the global CML unless formally authorized.
+
+## 2026-07-18 - Functional Workstation and global CML boundary
+
+- Replaced direct Workstation fixture consumption with asynchronous repository, runtime, authorization policy, and observable store ports backed by a deterministic in-memory adapter.
+- Implemented Space, member, Process, Node, connection, Run, cancellation, failure, and audited retry behavior without localStorage.
+- Wired Spaces, Process Canvas, Actions, and dashboard metrics to the in-memory service and capability matrix.
+- Added React Hook Form + Zod validation, stable domain errors, injectable IDs/clock/executor, unit coverage, and the full Playwright Workstation scenario.
+- Removed the embedded RedRise CML UI, routes, APIs, domain, MCP/ingestion scripts, duplicate tests, CTX configuration, and migrations 048-053; old routes now resolve as 404.
+- Added the server-only RedRise adapter for the official SDK with explicit configuration/unavailability errors and no silent local fallback.
+- Prepared and validated @correnth/context-memory 1.0.0 in the canonical repository; local release tag v1.0.0 points to commit aba848b.
+- Updated RedRise and D:\00_docs architecture, roadmap, PRD, memory, corpus policy, and Graphify artifacts.
+
+### Validation
+
+- RedRise: typecheck passed; 4/4 unit tests passed; lint passed with 0 errors and 10 known warnings; production build passed.
+- Navigation audit: no RedScale/Context Memory routes or references remain in the active RedRise UI/app configuration.
+- Playwright discovery passed for auth setup plus the Workstation end-to-end scenario; execution requires a confirmed account through E2E_TEST_EMAIL and E2E_TEST_PASSWORD.
+- CML: lint and typecheck passed; 31 files / 127 tests passed; build passed.
+
+### Remaining external actions
+
+- GitHub push, GitHub Packages publication, and remote release creation remain pending explicit authorization/credentials for the external organization destination.
+- Full authenticated Playwright execution remains pending confirmed E2E credentials.
+
 ## 2026-07-09 - Context Memory Layer (PRD-CML-001)
 
 - Created `memory/modules/context-memory.md` with scope, entry points, invariants, and env config for the Context Memory Layer.

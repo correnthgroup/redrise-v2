@@ -17,7 +17,7 @@
 - shadcn primitives in `src/components/ui/`.
 - Layout components in `src/components/layout/`.
 - Domain code in `src/domains/`.
-- Supabase Auth is reused for foundation auth; final business persistence is pending.
+- Supabase Auth is reused for foundation auth; Workstation business behavior runs through async ports and an in-memory adapter; durable persistence is pending.
 - Package manager: npm.
 - Knowledge graph: `graphifyy[openai]` (Python, AST-only default, OpenRouter opt-in).
 
@@ -63,6 +63,13 @@ python -m graphify extract ./docs --backend openai  # optional semantic pass
 - Process Canvas: `src/domains/workstation/process/components/process-canvas-page.tsx`.
 - Actions: `src/domains/workstation/actions/components/actions-page.tsx`.
 
+## Platform Boundaries
+
+- RedScale does not exist in RedRise.
+- CML is an external, global-only Correnth platform; product integration is server-only through the official SDK.
+- Graphify remains the product-specific code/document context layer.
+- Customer-specific and sensitive content is excluded from global CML by default.
+
 ## Implemented Scope
 
 - PRD-000 Foundation Architecture.
@@ -80,6 +87,7 @@ python -m graphify extract ./docs --backend openai  # optional semantic pass
 - PRD-021 Actions Live Kanban.
 - PRD-022 Actions Run History.
 - PRD-023 Action Details Dialog.
+- Functional in-memory Workstation repository/runtime, capability policy, and retry.
 
 ## Current Invariants
 

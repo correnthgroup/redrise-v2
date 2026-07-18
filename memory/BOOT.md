@@ -29,9 +29,9 @@ These files win over older code, graph output, migrations, or memory.
 - App Shell, Sidebar, Breadcrumb, Notification Popover, Organization Switcher.
 - Workstation Root: `/:organizationSlug/workstation`.
 - Spaces Overview: `/:organizationSlug/workstation/spaces`.
-- Create Space Wizard and Space role assignment with typed mock data.
-- Process List and Process Canvas with typed mock data.
-- Actions observability screen with typed mock data.
+- Functional Space create/edit/archive and role assignment through the in-memory repository.
+- Functional Process and Canvas CRUD through async ports and the in-memory adapter.
+- Deterministic runtime, runtime-derived Actions/metrics, cancellation foundation, and audit-preserving retry.
 
 ## Current Entry Points
 
@@ -71,5 +71,6 @@ python -m graphify update . --force              # AST-only, zero token cost
 
 - Semantic layer uses OpenRouter (qwen-2.5-72b, ~$0.0005 per full pass). OPENROUTER_API_KEY in .env.local.
 - `cluster-only` does not respect `GRAPHIFY_OUT` env var — use `--graph docs/graphify-out/graph.json` flag instead.
-- Final Supabase business persistence for Spaces/Process/Actions/Workstation is pending.
+- Durable Supabase/PostgreSQL and worker adapters are pending; the UI contract is complete against memory.
+- CML is external and global-only; package publication must complete before adding the thin server adapter.
 - Legacy backend artifacts remain preserved until cleanup PRD.

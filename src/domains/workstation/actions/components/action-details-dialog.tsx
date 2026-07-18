@@ -1,6 +1,6 @@
 "use client"
 
-import { ActivityIcon, CopyIcon } from "lucide-react"
+import { ActivityIcon, CopyIcon, RotateCcwIcon } from "lucide-react"
 import { toast } from "sonner"
 
 import { Badge } from "@/components/ui/badge"
@@ -43,10 +43,12 @@ export function ActionDetailsDialog({
   action,
   open,
   onOpenChange,
+  onRetry,
 }: {
   action: ActionNodeRun | null
   open: boolean
   onOpenChange: (open: boolean) => void
+  onRetry?: (action: ActionNodeRun) => void | Promise<void>
 }) {
   const resultText = action?.resultSummary ?? action?.errorMessage ?? "No result available yet."
 
@@ -87,10 +89,13 @@ export function ActionDetailsDialog({
               </div>
               <div className="flex items-center justify-between border-t p-4">
                 <DialogClose render={<Button type="button" variant="ghost" />}>Close</DialogClose>
-                <Button type="button" size="sm" onClick={() => { navigator.clipboard?.writeText(resultText); toast.success("Result copied.") }}>
-                  <CopyIcon />
-                  Copy result
-                </Button>
+                <div className="flex gap-2">
+                  {action.status === "failed" && onRetry ? <Button type="button" size="sm" variant="outline" onClick={() => void onRetry(action)}><RotateCcwIcon />Retry</Button> : null}
+                  <Button type="button" size="sm" onClick={() => { navigator.clipboard?.writeText(resultText); toast.success("Result copied.") }}>
+                    <CopyIcon />
+                    Copy result
+                  </Button>
+                </div>
               </div>
             </div>
 

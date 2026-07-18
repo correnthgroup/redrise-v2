@@ -10,17 +10,29 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useWorkstation } from "@/domains/workstation/core/workstation-provider"
 import { AddSpaceMemberDialog } from "@/domains/workstation/spaces/dialogs/add-space-member-dialog"
 import { SpaceMembersList } from "@/domains/workstation/spaces/components/space-members-list"
 import type { Space } from "@/domains/workstation/spaces/types/space.types"
 
 export function SpacesTable({ spaces }: { spaces: Space[] }) {
+  const { repository, can } = useWorkstation()
   const [membersSpace, setMembersSpace] = React.useState<Space | null>(null)
 
-  function handleBlockedAction(action: string, space: Space) {
-    toast(`${action} for ${space.name} is not available in this PRD.`, {
-      description: "This action will be connected when Spaces persistence and permissions are implemented.",
-    })
+  async function editSpace(space: Space) {
+    if (!can("space.manage", space.id)) return void toast.error("You do not have permission to edit this Space.")
+    const name = window.prompt("Space name", space.name)?.trim()
+    if (!name) return
+    const description = window.prompt("Space description", space.description)?.trim()
+    if (!description) return
+    await repository.updateSpace(space.id, { name, description })
+    toast.success("Space updated.")
+  }
+
+  async function archiveSpace(space: Space) {
+    if (!can("space.manage", space.id)) return void toast.error("You do not have permission to archive this Space.")
+    await repository.archiveSpace(space.id)
+    toast.success(space.name + " archived.")
   }
 
   return (
@@ -29,7 +41,7 @@ export function SpacesTable({ spaces }: { spaces: Space[] }) {
         <CardHeader className="gap-3 md:flex-row md:items-center md:justify-between">
           <div className="grid gap-1.5">
             <CardTitle>Spaces List</CardTitle>
-            <CardDescription>Mocked Spaces with row actions based on table-02 behavior.</CardDescription>
+            <CardDescription>Session-backed Spaces managed through the Workstation repository.</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
@@ -66,10 +78,10 @@ export function SpacesTable({ spaces }: { spaces: Space[] }) {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-44">
                         <DropdownMenuItem onClick={() => setMembersSpace(space)}>Manage members</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleBlockedAction("View", space)}>View details</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleBlockedAction("Edit", space)}>Edit</DropdownMenuItem>
+
+                        {can("space.manage", space.id) ? <DropdownMenuItem onClick={() => void editSpace(space)}>Edit</DropdownMenuItem> : null}
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem variant="destructive" onClick={() => handleBlockedAction("Archive", space)}>Archive</DropdownMenuItem>
+                        {can("space.manage", space.id) ? <DropdownMenuItem variant="destructive" onClick={() => void archiveSpace(space)}>Archive</DropdownMenuItem> : null}
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -89,7 +101,7 @@ export function SpacesTable({ spaces }: { spaces: Space[] }) {
           {membersSpace ? (
             <div className="grid gap-4">
               <div className="flex justify-end">
-                <AddSpaceMemberDialog spaceName={membersSpace.name} />
+                <AddSpaceMemberDialog spaceId={membersSpace.id} spaceName={membersSpace.name} />
               </div>
               <SpaceMembersList space={membersSpace} />
             </div>

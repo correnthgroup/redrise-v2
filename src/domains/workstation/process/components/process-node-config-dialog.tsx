@@ -1,134 +1,93 @@
 "use client"
 
+import * as React from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { z } from "zod"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import type { RedRiseNode } from "@/domains/workstation/process/types/process.types"
 
-function JsonPreview({ value }: { value?: Record<string, unknown> }) {
-  return (
-    <pre className="max-h-32 overflow-auto rounded-lg bg-muted p-3 text-xs text-muted-foreground">
-      {JSON.stringify(value ?? {}, null, 2)}
-    </pre>
-  )
+const jsonText = z.string().refine((value) => { try { JSON.parse(value); return true } catch { return false } }, "Enter valid JSON.")
+const nodeFormSchema = z.object({
+  title: z.string().trim().min(2),
+  description: z.string(),
+  instruction: z.string().trim().min(3),
+  inputMode: z.string().trim().min(1),
+  inputMapping: jsonText,
+  config: jsonText,
+  outputType: z.string().trim().min(1),
+  outputContract: jsonText,
+  failureBehavior: z.string().trim().min(1),
+  enabled: z.boolean(),
+})
+type NodeForm = z.infer<typeof nodeFormSchema>
+
+function values(node: RedRiseNode): NodeForm {
+  return {
+    title: node.title,
+    description: node.description ?? "",
+    instruction: node.instruction,
+    inputMode: node.inputMode,
+    inputMapping: JSON.stringify(node.inputMapping, null, 2),
+    config: JSON.stringify(node.config, null, 2),
+    outputType: node.outputType,
+    outputContract: JSON.stringify(node.outputContract, null, 2),
+    failureBehavior: node.failureBehavior,
+    enabled: node.enabled,
+  }
 }
 
-export function ProcessNodeConfigDialog({
-  node,
-  open,
-  onOpenChange,
-}: {
-  node: RedRiseNode | null
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}) {
+export function ProcessNodeConfigDialog({ node, open, onOpenChange, onSave }: { node: RedRiseNode | null; open: boolean; onOpenChange: (open: boolean) => void; onSave: (nodeId: string, patch: Partial<RedRiseNode>) => Promise<void> }) {
+  const form = useForm<NodeForm>({ resolver: zodResolver(nodeFormSchema), values: node ? values(node) : undefined })
+
+  async function submit(input: NodeForm) {
+    if (!node) return
+    try {
+      await onSave(node.id, {
+        title: input.title,
+        description: input.description,
+        instruction: input.instruction,
+        inputMode: input.inputMode as RedRiseNode["inputMode"],
+        inputMapping: JSON.parse(input.inputMapping) as Record<string, unknown>,
+        config: JSON.parse(input.config) as Record<string, unknown>,
+        outputType: input.outputType as RedRiseNode["outputType"],
+        outputContract: JSON.parse(input.outputContract) as Record<string, unknown>,
+        failureBehavior: input.failureBehavior as RedRiseNode["failureBehavior"],
+        enabled: input.enabled,
+      })
+      toast.success("Node configuration saved in memory.")
+      onOpenChange(false)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Could not save Node.")
+    }
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-4xl">
-        <DialogHeader>
-          <DialogTitle>{node ? `Configure ${node.title}` : "Configure Node"}</DialogTitle>
-        </DialogHeader>
-        {node ? (
-          <div className="grid max-h-[70dvh] gap-4 overflow-y-auto pr-1 md:grid-cols-2">
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Identity</h3>
-                <p className="text-xs text-muted-foreground">Core node identity and ownership.</p>
-              </div>
-              <div className="grid gap-2">
-                <Label>Title</Label>
-                <Input defaultValue={node.title} />
-              </div>
-              <div className="grid gap-2">
-                <Label>Description</Label>
-                <Textarea defaultValue={node.description} />
-              </div>
-              <div className="flex flex-wrap gap-2 text-xs">
-                <Badge variant="outline">{node.nodeType}</Badge>
-                <Badge variant={node.enabled ? "default" : "secondary"}>{node.enabled ? "enabled" : "disabled"}</Badge>
-              </div>
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Instruction</h3>
-                <p className="text-xs text-muted-foreground">Prompt or execution directive.</p>
-              </div>
-              <Textarea defaultValue={node.instruction} className="min-h-32" />
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Input</h3>
-                <p className="text-xs text-muted-foreground">Input mode and mapping contract.</p>
-              </div>
-              <div className="grid gap-2">
-                <Label>Input mode</Label>
-                <Input defaultValue={node.inputMode} />
-              </div>
-              <JsonPreview value={node.inputMapping} />
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Tool/Execution</h3>
-                <p className="text-xs text-muted-foreground">Node-specific config. Runtime execution is outside this MVP.</p>
-              </div>
-              <JsonPreview value={node.config} />
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Output</h3>
-                <p className="text-xs text-muted-foreground">Expected output type and contract.</p>
-              </div>
-              <div className="grid gap-2">
-                <Label>Output type</Label>
-                <Input defaultValue={node.outputType} />
-              </div>
-              <JsonPreview value={node.outputContract} />
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4">
-              <div>
-                <h3 className="font-medium">Error Handling</h3>
-                <p className="text-xs text-muted-foreground">Failure path behavior for node connections.</p>
-              </div>
-              <Input defaultValue={node.failureBehavior} />
-            </section>
-
-            <section className="grid gap-3 rounded-xl border p-4 md:col-span-2">
-              <div>
-                <h3 className="font-medium">Review</h3>
-                <p className="text-xs text-muted-foreground">Audit fields kept for future persistence.</p>
-              </div>
-              <div className="grid gap-3 sm:grid-cols-4">
-                <div className="grid gap-1 text-xs"><span className="text-muted-foreground">Created by</span><span>{node.createdBy}</span></div>
-                <div className="grid gap-1 text-xs"><span className="text-muted-foreground">Updated by</span><span>{node.updatedBy}</span></div>
-                <div className="grid gap-1 text-xs"><span className="text-muted-foreground">Created</span><span>{node.createdAt}</span></div>
-                <div className="grid gap-1 text-xs"><span className="text-muted-foreground">Updated</span><span>{node.updatedAt}</span></div>
-              </div>
-            </section>
-
-            <div className="flex justify-end gap-2 md:col-span-2">
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-              <Button type="button" onClick={() => {
-                toast.success("Node configuration saved locally.", { description: "Persistence will be wired in a later PRD." })
-                onOpenChange(false)
-              }}>Save changes</Button>
-            </div>
-          </div>
-        ) : null}
+        <DialogHeader><DialogTitle>{node ? "Configure " + node.title : "Configure Node"}</DialogTitle></DialogHeader>
+        {node ? <form className="grid max-h-[72dvh] gap-4 overflow-y-auto pr-1 md:grid-cols-2" onSubmit={form.handleSubmit(submit)}>
+          <section className="grid gap-3 rounded-xl border p-4">
+            <h3 className="font-medium">Identity</h3>
+            <Label>Title</Label><Input {...form.register("title")} />
+            <Label>Description</Label><Textarea {...form.register("description")} />
+            <div className="flex gap-2"><Badge variant="outline">{node.nodeType}</Badge><label className="flex items-center gap-2 text-sm"><Checkbox checked={form.watch("enabled")} onCheckedChange={(value) => form.setValue("enabled", Boolean(value))} />Enabled</label></div>
+          </section>
+          <section className="grid gap-3 rounded-xl border p-4"><h3 className="font-medium">Instruction</h3><Textarea {...form.register("instruction")} className="min-h-32" /></section>
+          <section className="grid gap-3 rounded-xl border p-4"><h3 className="font-medium">Input</h3><Label>Mode</Label><Input {...form.register("inputMode")} /><Label>Mapping JSON</Label><Textarea {...form.register("inputMapping")} className="font-mono text-xs" /></section>
+          <section className="grid gap-3 rounded-xl border p-4"><h3 className="font-medium">Execution config JSON</h3><Textarea {...form.register("config")} className="min-h-36 font-mono text-xs" /><p className="text-xs text-muted-foreground">Set simulateFailure to true to exercise retry.</p></section>
+          <section className="grid gap-3 rounded-xl border p-4"><h3 className="font-medium">Output</h3><Label>Type</Label><Input {...form.register("outputType")} /><Label>Contract JSON</Label><Textarea {...form.register("outputContract")} className="font-mono text-xs" /></section>
+          <section className="grid gap-3 rounded-xl border p-4"><h3 className="font-medium">Error handling</h3><Label>Behavior</Label><Input {...form.register("failureBehavior")} /></section>
+          <div className="flex justify-end gap-2 md:col-span-2"><Button type="button" variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button><Button type="submit">Save changes</Button></div>
+        </form> : null}
       </DialogContent>
     </Dialog>
   )

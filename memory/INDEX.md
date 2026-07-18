@@ -17,7 +17,6 @@ Context router for RedRise.
 | App Shell/Layout | `memory/modules/settings.md` if settings-adjacent | `src/components/layout/`, `src/app/(app)/[organizationSlug]/layout.tsx` |
 | Workstation/Spaces | `memory/modules/workstation.md` | `src/domains/workstation/`, `src/app/(app)/[organizationSlug]/workstation/` |
 | Supabase/Auth/backend | `memory/modules/supabase.md` | `src/lib/supabase*.ts`, `supabase/` |
-| Context Memory (CML) | `memory/modules/context-memory.md` | `src/domains/context/`, `supabase/migrations/048_*`, `scripts/ingest-markdown.mjs`, `scripts/mcp/correnth-context.mjs`, `src/app/(app)/[organizationSlug]/context/` |
 | Validation/deploy | `memory/modules/testing-deploy.md` | `package.json`, `README.md`, graphify outputs |
 
 ## Documentation Policy
