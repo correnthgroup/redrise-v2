@@ -1,5 +1,13 @@
 # TASK_LOG
 
+## 2026-07-18 - Turbopack Client Manifest recovery
+
+- Confirmed Next/React dependencies and the built-in global-error module were present and consistent.
+- Confirmed the failure returned after a production build and isolated it to the generated .next/dev cache; removing only that directory rebuilt the React Client Manifest while preserving build output.
+- npm run dev now clears only .next/dev before startup; clean:next/dev:clean expose the same safe recovery and dev:webpack remains the official fallback bundler.
+- A cold npm run dev became ready in 1.2s; / redirected to /sign-in, /sign-in returned 200, and /my-business/workstation returned the expected auth redirect.
+- The previous slow-filesystem warning and Client Manifest error did not recur after the rebuild.
+
 ## 2026-07-18 - Dev 404 and authenticated Workstation E2E
 
 - Fixed intermittent authenticated 404s by pinning turbopack.root to the RedRise repository instead of the parent directory inferred from an unrelated lockfile.

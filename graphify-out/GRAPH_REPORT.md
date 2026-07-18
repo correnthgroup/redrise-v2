@@ -1,11 +1,11 @@
 # Graph Report - redrise v2  (2026-07-18)
 
 ## Corpus Check
-- 302 files · ~111,614 words
+- 303 files · ~111,846 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2346 nodes · 2957 edges · 908 communities (260 shown, 648 thin omitted)
+- 2348 nodes · 2964 edges · 897 communities (256 shown, 641 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 10 edges (avg confidence: 0.68)
 - Token cost: 0 input · 0 output
 
@@ -30,6 +30,7 @@
 - clsx
 - App and Module Testing
 - @tailwindcss/postcss
+- jsdom
 - Team Management
 - Agent Management
 - Item UI Components
@@ -42,7 +43,6 @@
 - Global Setup and Environment
 - Alert UI Components
 - City Data and Search
-- SPA Fallback Handling
 - Accordion UI Components
 - Member Functions Utilities
 - Notification Management
@@ -101,7 +101,6 @@
 - Community 159
 - Community 160
 - Community 161
-- Project Management
 - Workspace Management
 - Product Architecture and Vision
 - Component and UI Registries
@@ -117,7 +116,6 @@
 - Boot and Source of Truth
 - Authentication Schemas
 - Sheet UI Components
-- Chart Components and Context
 - Action Details Dialog UI
 - Documentation and Memory Economics
 - Roadmap and Validation Status
@@ -179,7 +177,6 @@
 - Community 268
 - Community 269
 - Community 270
-- Community 271
 - Community 272
 - Community 273
 - Community 274
@@ -217,8 +214,6 @@
 - Community 306
 - member-functions.ts
 - timezones.ts
-- Community 309
-- Community 310
 - Community 313
 - RedRise - PRD Index v1
 - 10. Run History Table
@@ -242,7 +237,6 @@
 - @dnd-kit/modifiers
 - @dnd-kit/utilities
 - @eslint/js
-- eslint-plugin-react-refresh
 - globals
 - @hookform/resolvers
 - lucide-react
@@ -253,7 +247,6 @@
 - @radix-ui/react-avatar
 - @radix-ui/react-checkbox
 - @radix-ui/react-dialog
-- @radix-ui/react-dropdown-menu
 - @radix-ui/react-label
 - @radix-ui/react-popover
 - @radix-ui/react-progress
@@ -678,10 +671,6 @@
 - pt-BR
 - en-US
 - pt-BR
-- en-US
-- pt-BR
-- pt-BR
-- pt-BR
 - DEFAULT_ALLOWED_ORIGINS
 - Blockers
 - Blockers
@@ -765,7 +754,7 @@
 4. `Button` - 29 edges
 5. `InMemoryWorkstationAdapter` - 29 edges
 6. `supabase` - 29 edges
-7. `TASK_LOG` - 24 edges
+7. `TASK_LOG` - 25 edges
 8. `useWorkstation()` - 22 edges
 9. `05 — WS-ACTIONS Session Spec v1` - 21 edges
 10. `RouteSkeleton()` - 19 edges
@@ -773,95 +762,95 @@
 ## Surprising Connections (you probably didn't know these)
 - `AppSidebar()` --references--> `react`  [EXTRACTED]
   src/components/layout/app-sidebar.tsx → package.json
-- `MultiSelect()` --references--> `react`  [EXTRACTED]
-  src/components/multi-select.tsx → package.json
-- `ChartContainer()` --references--> `react`  [EXTRACTED]
-  src/components/ui/chart.tsx → package.json
-- `ChartTooltipContent()` --references--> `react`  [EXTRACTED]
-  src/components/ui/chart.tsx → package.json
-- `useChart()` --references--> `react`  [EXTRACTED]
-  src/components/ui/chart.tsx → package.json
+- `ContextMenu()` --references--> `react`  [EXTRACTED]
+  src/components/ui/context-menu.tsx → package.json
+- `useSidebar()` --references--> `react`  [EXTRACTED]
+  src/components/ui/sidebar-context.tsx → package.json
+- `SidebarMenuSkeleton()` --references--> `react`  [EXTRACTED]
+  src/components/ui/sidebar.tsx → package.json
+- `SidebarProvider()` --references--> `react`  [EXTRACTED]
+  src/components/ui/sidebar.tsx → package.json
 
 ## Import Cycles
 - None detected.
 
-## Communities (908 total, 648 thin omitted)
+## Communities (897 total, 641 thin omitted)
 
 ### Community 0 - "User Signup and Process Dialogs"
-Cohesion: 0.24
-Nodes (12): Button, ButtonProps, SelectContent(), SelectItem(), SelectTrigger(), SelectValue(), DataTablePagination(), AddSpaceMemberDialog() (+4 more)
+Cohesion: 0.18
+Nodes (12): Item(), ItemActions(), ItemContent(), ItemDescription(), ItemFooter(), ItemGroup(), ItemHeader(), ItemMedia() (+4 more)
 
 ### Community 1 - "Space Members and Workstation UI"
 Cohesion: 0.25
 Nodes (7): CmlAdapterError, CmlAdapterErrorCode, GlobalContextStatus, loadClient(), OfficialSdk, RedRiseGlobalContextResult, searchRedRiseGlobalContext()
 
 ### Community 2 - "Avatar and Context Menu UI"
-Cohesion: 0.29
-Nodes (14): CardDescription, CardHeader, CardTitle, Checkbox(), Table(), TableBody(), TableCell(), TableHead() (+6 more)
+Cohesion: 0.20
+Nodes (11): DialogHeader(), InputGroupAddon(), inputGroupAddonVariants, InputGroupButton(), inputGroupButtonVariants, Textarea(), jsonText, NodeForm (+3 more)
 
 ### Community 6 - "User Authentication and Dialogs"
-Cohesion: 0.15
-Nodes (8): CanvasNodeData, mockCanvasNodes, mockNodeConnections, mockNodeRuns, mockProcesses, mockProcessOwners, NodeConnection, NodeRun
+Cohesion: 0.18
+Nodes (6): DrawerContent(), DrawerDescription(), DrawerFooter(), DrawerHeader(), DrawerOverlay(), DrawerTitle()
 
 ### Community 7 - "User Profile and Session Management"
-Cohesion: 0.15
-Nodes (17): Badge(), badgeVariants, Card, CardAction, CardContent, CardFooter, Progress, ActionsKanban() (+9 more)
+Cohesion: 0.43
+Nodes (5): ToggleGroup(), ToggleGroupContext, ToggleGroupItem(), Toggle(), toggleVariants
 
 ### Community 8 - "Icon and Accordion Components"
 Cohesion: 0.29
 Nodes (7): Collapsible(), CollapsibleContent(), CollapsibleTrigger(), Kbd(), KbdGroup(), ProcessCanvasToolbar(), ProcessCanvasToolbarProps
 
 ### Community 9 - "App Shell and Organization Navigation"
-Cohesion: 0.25
-Nodes (7): actionProcesses, actionSpaces, filterActions(), filterProcessRuns(), mockActionNodeRuns, mockProcessRuns, ActionStage
+Cohesion: 0.13
+Nodes (9): ProcessRun, AuthorizationPolicy, ExecutionRuntime, FixtureAuthorizationPolicy, WorkstationContext, WorkstationContextValue, WorkstationProvider(), OrganizationRole (+1 more)
 
 ### Community 10 - "Task Execution Management"
-Cohesion: 0.22
-Nodes (8): ActionNodeRunStatus, actionNodeRunStatuses, actionStages, ActionStageSummary, ActionTriggerType, actionTriggerTypes, ProcessRunStatus, processRunStatuses
+Cohesion: 0.40
+Nodes (5): Tabs(), TabsContent(), TabsList(), tabsListVariants, TabsTrigger()
 
 ### Community 14 - "Flow Management and Approval"
-Cohesion: 0.10
-Nodes (35): AppShellProps, AppSidebar(), AppSidebarProps, isRouteActive(), NotificationPopover(), ActiveOrganization, organizations, OrganizationSwitcher() (+27 more)
+Cohesion: 0.09
+Nodes (36): AppShellProps, AppSidebar(), AppSidebarProps, isRouteActive(), ActiveOrganization, getSidebarRoutes(), SidebarContext, SidebarContextProps (+28 more)
 
 ### Community 15 - "Avatar and Background UI Elements"
 Cohesion: 0.07
 Nodes (39): useWorkspaces(), createDefaultProfile(), decodeJwtPayload(), ensureCurrentUserTeamMember(), fromSupabaseProfile(), getSessionLocation(), getSupabaseSessionId(), loadRememberedSessions() (+31 more)
 
 ### Community 16 - "alert.tsx"
-Cohesion: 0.40
-Nodes (4): Alert, AlertDescription, AlertTitle, alertVariants
+Cohesion: 0.11
+Nodes (13): AccordionContent, AccordionItem, AccordionTrigger, Alert, AlertDescription, AlertTitle, alertVariants, Label (+5 more)
 
 ### Community 17 - "Task Management"
-Cohesion: 0.05
-Nodes (52): Avatar(), AvatarBadge(), AvatarFallback(), AvatarGroup(), AvatarGroupCount(), AvatarImage(), BackgroundGradient(), BackgroundGradientProps (+44 more)
-
-### Community 18 - "accordion.tsx"
-Cohesion: 0.50
-Nodes (3): AccordionContent, AccordionItem, AccordionTrigger
+Cohesion: 0.06
+Nodes (43): Avatar(), AvatarBadge(), AvatarFallback(), AvatarGroup(), AvatarGroupCount(), AvatarImage(), BackgroundGradient(), BackgroundGradientProps (+35 more)
 
 ### Community 22 - "App and Module Testing"
-Cohesion: 0.12
-Nodes (24): Dialog(), DialogClose(), DialogContent(), DialogDescription(), DialogFooter(), DialogHeader(), DialogOverlay(), DialogTitle() (+16 more)
+Cohesion: 0.16
+Nodes (20): Button, Dialog(), DialogClose(), DialogContent(), DialogDescription(), DialogFooter(), DialogTitle(), DialogTrigger() (+12 more)
+
+### Community 23 - "@tailwindcss/postcss"
+Cohesion: 0.50
+Nodes (3): nextDevOutput, nextOutputRoot, workspaceRoot
 
 ### Community 28 - "Agent Management"
 Cohesion: 0.06
 Nodes (34): dom, dom.iterable, esnext, graphify-out, .next/dev/types/**/*.ts, next-env.d.ts, .next/types/**/*.ts, node_modules (+26 more)
 
 ### Community 37 - "Item UI Components"
-Cohesion: 0.35
-Nodes (7): ActionsFilters(), defaultActionFilters, ActionsPage(), ActionFilters, filterActions(), filterProcessRuns(), matchesDate()
+Cohesion: 0.11
+Nodes (23): ActionsFilters(), defaultActionFilters, ActionsPage(), actionProcesses, actionSpaces, filterActions(), filterProcessRuns(), mockActionNodeRuns (+15 more)
 
 ### Community 42 - "Drawer UI Components"
-Cohesion: 0.12
-Nodes (19): Input, Label, labelVariants, RequiredLabel(), RequiredLabelProps, Spinner(), ForgotPasswordForm(), ResetPasswordForm() (+11 more)
+Cohesion: 0.21
+Nodes (4): AnalyticsData, AgentProviderAuthMethod, AgentProviderId, supabase
 
 ### Community 45 - "API Keys and Audit Logs"
 Cohesion: 0.10
 Nodes (18): geist, metadata, AppProviders(), I18nContext, I18nContextValue, I18nProvider(), SonnerProvider(), BackButton() (+10 more)
 
 ### Community 49 - "App Shell and Notifications"
-Cohesion: 0.10
-Nodes (25): MultiSelect(), MultiSelectProps, Command(), CommandDialog(), CommandEmpty(), CommandGroup(), CommandInput(), CommandItem() (+17 more)
+Cohesion: 0.15
+Nodes (17): MultiSelectProps, Command(), CommandDialog(), CommandEmpty(), CommandGroup(), CommandInput(), CommandItem(), CommandList() (+9 more)
 
 ### Community 58 - "Context Pack and Documentation"
 Cohesion: 0.10
@@ -872,24 +861,20 @@ Cohesion: 0.18
 Nodes (22): useFlows(), logAuditEvent(), approveFlow(), createFlow(), deleteFlow(), generateShortId(), generateUniqueId(), invalidateFlowOfficialStatus() (+14 more)
 
 ### Community 64 - "Package Metadata"
-Cohesion: 0.18
-Nodes (4): getActionStage(), clone(), duration(), InMemoryWorkstationAdapter
+Cohesion: 0.17
+Nodes (3): getActionStage(), duration(), InMemoryWorkstationAdapter
 
 ### Community 65 - "Global Setup and Environment"
 Cohesion: 0.07
-Nodes (27): 2026-07-06 - Foundation through WS-SPACES, 2026-07-07 - Memory Economics, 2026-07-07 - WS-ACTIONS, 2026-07-07 - WS-PROCESS, 2026-07-08 - Semantic Layer Migration, 2026-07-09 - Context Memory Layer Functional Rollout, 2026-07-09 - Context Memory Layer (PRD-CML-001), 2026-07-18 - Dev 404 and authenticated Workstation E2E (+19 more)
+Nodes (28): 2026-07-06 - Foundation through WS-SPACES, 2026-07-07 - Memory Economics, 2026-07-07 - WS-ACTIONS, 2026-07-07 - WS-PROCESS, 2026-07-08 - Semantic Layer Migration, 2026-07-09 - Context Memory Layer Functional Rollout, 2026-07-09 - Context Memory Layer (PRD-CML-001), 2026-07-18 - Dev 404 and authenticated Workstation E2E (+20 more)
 
 ### Community 66 - "Alert UI Components"
-Cohesion: 0.09
-Nodes (32): NotificationPopoverProps, notifications, DropdownMenu(), DropdownMenuCheckboxItem(), DropdownMenuContent(), DropdownMenuGroup(), DropdownMenuItem(), DropdownMenuLabel() (+24 more)
+Cohesion: 0.06
+Nodes (74): WorkstationPageProps, NotificationPopover(), NotificationPopoverProps, notifications, organizations, OrganizationSwitcher(), Badge(), badgeVariants (+66 more)
 
 ### Community 68 - "City Data and Search"
 Cohesion: 0.11
 Nodes (13): AccessRole, AgentAccessContext, displayName(), isOnline(), loadCurrentTeamAssignment(), loadTeamMembers(), normalizeTeamName(), ProfileRow (+5 more)
-
-### Community 71 - "SPA Fallback Handling"
-Cohesion: 0.18
-Nodes (10): useWorkstation(), ProcessCanvasPage(), ProcessPage(), getColumns(), ProcessTable(), CreateProcessDialog(), SpacesMetricsStrip(), SpacesPage() (+2 more)
 
 ### Community 72 - "Accordion UI Components"
 Cohesion: 0.11
@@ -908,12 +893,12 @@ Cohesion: 0.11
 Nodes (18): aliases, components, hooks, lib, ui, utils, iconLibrary, registries (+10 more)
 
 ### Community 113 - "Task Execution Management"
-Cohesion: 0.11
-Nodes (17): DomainErrorCode, FixtureAuthorizationPolicy, ROLE_CAPABILITIES, WorkstationAdapterOptions, WorkstationDomainError, acceptedOrganizationMembers, mockOrganizationMembers, mockSpaces (+9 more)
+Cohesion: 0.10
+Nodes (20): clone(), DomainErrorCode, ROLE_CAPABILITIES, WorkstationAdapterOptions, WorkstationDomainError, WorkstationSnapshot, CanvasNodeData, mockCanvasNodes (+12 more)
 
 ### Community 119 - "Team Member and Access Roles"
-Cohesion: 0.14
-Nodes (5): WorkstationRepository, RedRiseNode, RedRiseProcess, CreateSpaceInput, Space
+Cohesion: 0.12
+Nodes (6): WorkstationRepository, CreateProcessInput, RedRiseNode, RedRiseProcess, AddSpaceMemberInput, CreateSpaceInput
 
 ### Community 122 - "Flow Run Management"
 Cohesion: 0.11
@@ -923,13 +908,9 @@ Nodes (17): Active Sources Of Truth, AGENTS, Backend policy, Cache protection, C
 Cohesion: 0.12
 Nodes (16): Actions, App Shell, Auth Domain, Backend Status, Current Code Organization, Current Navigation, Implemented Screen IDs, Next Scope Boundary (+8 more)
 
-### Community 162 - "Project Management"
-Cohesion: 0.13
-Nodes (17): react, react, ContextMenu(), ContextMenuContent(), ContextMenuContentProps, ContextMenuContext, ContextMenuItem(), ContextMenuItemProps (+9 more)
-
 ### Community 164 - "Workspace Management"
-Cohesion: 0.14
-Nodes (8): AnalyticsData, AgentProviderAuthMethod, AgentProviderId, ChatCompletionResponse, ChatMessage, TaskExecuteContext, TaskExecuteResult, supabase
+Cohesion: 0.29
+Nodes (4): ChatCompletionResponse, ChatMessage, TaskExecuteContext, TaskExecuteResult
 
 ### Community 169 - "Product Architecture and Vision"
 Cohesion: 0.27
@@ -944,8 +925,8 @@ Cohesion: 0.27
 Nodes (5): openSettings(), openAuthenticatedApp(), openSidebarModule(), openTopbarAction(), SidebarModule
 
 ### Community 174 - "WS-ACTIONS Session Specification"
-Cohesion: 0.13
-Nodes (14): connectionTypes, failureBehaviors, inputModes, NodeConnectionType, NodeRunStatus, nodeRunStatuses, outputTypes, ProcessFrequency (+6 more)
+Cohesion: 0.12
+Nodes (17): createProcessSchema, connectionTypes, failureBehaviors, inputModes, NodeConnectionType, NodeRunStatus, nodeRunStatuses, nodeTypes (+9 more)
 
 ### Community 177 - "Operations and Server Scripts"
 Cohesion: 0.26
@@ -973,19 +954,15 @@ Nodes (12): 05 — WS-ACTIONS Session Spec v1, 13. Realtime Requirements, 14. So
 
 ### Community 188 - "Boot and Source of Truth"
 Cohesion: 0.15
-Nodes (13): eslint, eslint-config-next, jsdom, devDependencies, eslint, eslint-config-next, jsdom, @playwright/test (+5 more)
+Nodes (13): eslint, eslint-config-next, devDependencies, eslint, eslint-config-next, @playwright/test, shadcn, @tailwindcss/postcss (+5 more)
 
 ### Community 190 - "Authentication Schemas"
 Cohesion: 0.23
 Nodes (10): __dirname, handle(), processMessage(), projectRoot, shell(), startServer(), toolList(), tools (+2 more)
 
 ### Community 191 - "Sheet UI Components"
-Cohesion: 0.08
-Nodes (31): WorkstationPageProps, ChartConfig, ChartContainer(), ChartContext, ChartContextProps, ChartLegendContent(), ChartTooltipContent(), getPayloadConfigFromPayload() (+23 more)
-
-### Community 193 - "Chart Components and Context"
-Cohesion: 0.23
-Nodes (8): ActionNodeRun, ProcessRun, AuthorizationPolicy, ExecutionRuntime, WorkstationContext, WorkstationContextValue, WorkstationCapability, WorkstationSnapshot
+Cohesion: 0.05
+Nodes (43): react, react, MultiSelect(), ChartConfig, ChartContainer(), ChartContext, ChartContextProps, ChartLegendContent() (+35 more)
 
 ### Community 194 - "Action Details Dialog UI"
 Cohesion: 0.23
@@ -1004,12 +981,12 @@ Cohesion: 0.18
 Nodes (11): @base-ui/react, next-themes, dependencies, @base-ui/react, next-themes, @radix-ui/react-select, @radix-ui/react-tooltip, react-hook-form (+3 more)
 
 ### Community 199 - "PRD Index and Acceptance Rules"
-Cohesion: 0.18
-Nodes (11): scripts, build, dev, lint, mcp:redrise-ops, mcp:redrise-ops:self-test, start, test:e2e (+3 more)
+Cohesion: 0.14
+Nodes (14): scripts, build, clean:next, dev, dev:clean, dev:webpack, lint, mcp:redrise-ops (+6 more)
 
 ### Community 200 - "Test Checklist and RBAC"
-Cohesion: 0.24
-Nodes (5): AuthGradientVisual(), GradientBlinds(), AuthLayout(), SignInForm(), SignUpForm()
+Cohesion: 0.10
+Nodes (20): Input, Spinner(), AuthGradientVisual(), GradientBlinds(), AuthLayout(), ForgotPasswordForm(), ResetPasswordForm(), SignInForm() (+12 more)
 
 ### Community 204 - "UI Header and Breadcrumb Rules"
 Cohesion: 0.18
@@ -1087,10 +1064,6 @@ Nodes (6): 19. Test Checklist, Dialog, Filters, Kanban, RBAC, Run History Table
 Cohesion: 0.33
 Nodes (5): Core files, Current behavior, Next milestone, State transitions, Workstation
 
-### Community 271 - "Community 271"
-Cohesion: 0.70
-Nodes (4): getServerSnapshot(), getSnapshot(), subscribe(), useIsMobile()
-
 ### Community 272 - "Community 272"
 Cohesion: 0.40
 Nodes (3): DEFAULT_ALLOWED_ORIGINS, getAllowedOrigins(), getCorsHeaders()
@@ -1128,8 +1101,8 @@ Cohesion: 0.40
 Nodes (4): name, private, type, version
 
 ### Community 305 - "alert.tsx"
-Cohesion: 0.17
-Nodes (11): AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter(), AlertDialogHeader(), AlertDialogOverlay, AlertDialogTitle (+3 more)
+Cohesion: 0.16
+Nodes (12): AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter(), AlertDialogHeader(), AlertDialogOverlay, AlertDialogTitle (+4 more)
 
 ### Community 307 - "member-functions.ts"
 Cohesion: 0.50
@@ -1184,24 +1157,24 @@ Cohesion: 0.67
 Nodes (3): 8. Kanban Behavior, Drag and drop, Realtime movement
 
 ## Knowledge Gaps
-- **1088 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `css` (+1083 more)
+- **1089 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `css` (+1084 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **648 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **641 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `cn()` connect `Task Management` to `User Signup and Process Dialogs`, `Avatar and Context Menu UI`, `User Profile and Session Management`, `Icon and Accordion Components`, `Flow Management and Approval`, `alert.tsx`, `accordion.tsx`, `scroll-area.tsx`, `App and Module Testing`, `Project Management`, `Drawer UI Components`, `App Shell and Notifications`, `alert.tsx`, `Project Roadmap and Status`, `Sheet UI Components`, `Alert UI Components`, `Test Checklist and RBAC`, `UI Header and Breadcrumb Rules`, `Community 233`, `Community 254`?**
-  _High betweenness centrality (0.070) - this node is a cross-community bridge._
-- **Why does `react` connect `Project Management` to `User Signup and Process Dialogs`, `Item UI Components`, `Context Pack and Documentation`, `SPA Fallback Handling`, `Test Checklist and RBAC`, `Drawer UI Components`, `Flow Management and Approval`, `Community 271`, `App Shell and Notifications`, `Task Management`, `Sheet UI Components`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **Why does `dependencies` connect `Context Pack and Documentation` to `Flow Management and Approval`, `clsx`, `Project Management`, `package.json`, `class-variance-authority`, `cmdk`, `date-fns`, `@dnd-kit/core`, `@dnd-kit/modifiers`, `@dnd-kit/utilities`, `@hookform/resolvers`, `lucide-react`, `next`, `@radix-ui/react-alert-dialog`, `@radix-ui/react-avatar`, `@radix-ui/react-checkbox`, `@radix-ui/react-dialog`, `@radix-ui/react-dropdown-menu`, `@radix-ui/react-label`, `@radix-ui/react-popover`, `@radix-ui/react-progress`, `@radix-ui/react-scroll-area`, `@radix-ui/react-separator`, `@radix-ui/react-slider`, `@radix-ui/react-slot`, `@radix-ui/react-switch`, `@radix-ui/react-tabs`, `react-day-picker`, `react-dom`, `react-is`, `recharts`, `sonner`, `@supabase/ssr`, `@supabase/supabase-js`, `@tabler/icons-react`, `tailwind-merge`, `@tanstack/react-table`, `tw-animate-css`, `vaul`, `@xyflow/react`, `zod`?**
-  _High betweenness centrality (0.058) - this node is a cross-community bridge._
+- **Why does `cn()` connect `Task Management` to `User Signup and Process Dialogs`, `Alert UI Components`, `Avatar and Context Menu UI`, `User Authentication and Dialogs`, `User Profile and Session Management`, `Test Checklist and RBAC`, `Community 233`, `Icon and Accordion Components`, `Task Execution Management`, `UI Header and Breadcrumb Rules`, `Flow Management and Approval`, `alert.tsx`, `App Shell and Notifications`, `alert.tsx`, `Project Roadmap and Status`, `App and Module Testing`, `Community 254`, `Sheet UI Components`?**
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
+- **Why does `react` connect `Sheet UI Components` to `Alert UI Components`, `Item UI Components`, `Context Pack and Documentation`, `User Profile and Session Management`, `Test Checklist and RBAC`, `App Shell and Organization Navigation`, `Flow Management and Approval`?**
+  _High betweenness centrality (0.059) - this node is a cross-community bridge._
+- **Why does `dependencies` connect `Context Pack and Documentation` to `Flow Management and Approval`, `scroll-area.tsx`, `clsx`, `package.json`, `Sheet UI Components`, `class-variance-authority`, `cmdk`, `date-fns`, `@dnd-kit/core`, `@dnd-kit/modifiers`, `@dnd-kit/utilities`, `@hookform/resolvers`, `lucide-react`, `next`, `@radix-ui/react-alert-dialog`, `@radix-ui/react-avatar`, `@radix-ui/react-checkbox`, `@radix-ui/react-dialog`, `@radix-ui/react-label`, `@radix-ui/react-popover`, `@radix-ui/react-progress`, `@radix-ui/react-scroll-area`, `@radix-ui/react-separator`, `@radix-ui/react-slider`, `@radix-ui/react-slot`, `@radix-ui/react-switch`, `@radix-ui/react-tabs`, `react-day-picker`, `react-dom`, `react-is`, `recharts`, `sonner`, `@supabase/ssr`, `@supabase/supabase-js`, `@tabler/icons-react`, `tailwind-merge`, `@tanstack/react-table`, `tw-animate-css`, `vaul`, `@xyflow/react`, `zod`?**
+  _High betweenness centrality (0.057) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _1088 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `User Profile and Session Management` be split into smaller, more focused modules?**
-  _Cohesion score 0.1452991452991453 - nodes in this community are weakly interconnected._
+  _1089 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `App Shell and Organization Navigation` be split into smaller, more focused modules?**
+  _Cohesion score 0.12857142857142856 - nodes in this community are weakly interconnected._
 - **Should `Flow Management and Approval` be split into smaller, more focused modules?**
-  _Cohesion score 0.09634551495016612 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08859357696567 - nodes in this community are weakly interconnected._
 - **Should `Avatar and Background UI Elements` be split into smaller, more focused modules?**
   _Cohesion score 0.06862745098039216 - nodes in this community are weakly interconnected._

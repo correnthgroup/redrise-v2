@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run clean:next && next dev",
+    "dev:clean": "npm run clean:next && next dev",
+    "dev:webpack": "next dev --webpack",
+    "clean:next": "node scripts/clean-next.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
