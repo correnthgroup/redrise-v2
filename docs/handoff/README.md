@@ -43,3 +43,23 @@
 
 - UI Workstation PRD-014–023 (contratos de porta)
 - PRD-024 Fases 0–2: ADRs, migrations `050`–`053`, RLS + pgTAP, RPCs `ws_*`, `SupabaseWorkstationAdapter`, flag `WORKSTATION_DURABLE`
+
+## Fronteira CML vs backend RedRise
+
+A CML é uma plataforma externa compartilhada do ecossistema Correnth, não parte do backend interno do RedRise. RedRise pode consumir a CML por API/SDK/MCP versionados e server-only, mas não deve implementar CML, retrieval, embeddings, MCP gateway ou migrations CML dentro do produto.
+
+| Camada | Responsabilidade |
+|---|---|
+| Backend do RedRise | Supabase Auth, banco do RedRise, RLS, Workstation worker, server actions/rotas do produto |
+| CML | Contexto/memória compartilhada da Correnth, Context Packs citados, contratos/versionamento, consumidores autorizados |
+| Graphify do RedRise | Índice local de código/docs/memória específicos do RedRise |
+
+A CML pode armazenar direção vigente do grupo, decisões transversais, PRDs de plataformas compartilhadas, contratos públicos versionados, padrões técnicos/operacionais/segurança e Context Packs autorizados. A CML não deve armazenar por padrão código do RedRise, PRDs específicos do produto, Graphify bruto, Spaces, Processes, Nodes, Runs, Actions, dados de cliente, segredos ou memória curta de tarefa.
+
+Para qualquer trabalho da empresa:
+
+- Não embutir CML no RedRise.
+- Não acessar tabelas internas da CML diretamente.
+- Não criar fallback local de CML.
+- Integrar CML somente via SDK/API oficial, server-side, quando `CML_API_BASE_URL` e `CML_CONSUMER_ACCESS_TOKEN` estiverem provisionados.
+- Manter contexto específico do RedRise em `docs/`, `memory/` e `docs/graphify-out/`.
