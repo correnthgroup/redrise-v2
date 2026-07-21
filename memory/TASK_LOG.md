@@ -1,5 +1,11 @@
 # TASK_LOG
 
+## 2026-07-21 - Graphify AST-only policy alignment
+
+- Updated RedRise references to follow the workspace policy in `D:\00_docs\AGENTS.md`: each Correnth project owns its local Graphify; never run Graphify from `D:\`; semantic/LLM extraction is opt-in and currently disabled for RedRise.
+- Added `scripts/graphify-ast.ps1` / `.sh` as the active RedRise rebuild path. Deprecated `graphify-semantic.*` scripts now warn and delegate to AST-only.
+- RedRise canonical output remains `docs/graphify-out/`; root `graphify-out/` is temporary only and excluded from corpus by `.graphifyignore`.
+
 ## 2026-07-21 - Vendor handoff PR series
 
 - Added `docs/handoff/` with vendor engagement rules and PR-ready backlog for finishing RedRise after PRD-024 Phases 0-2. PR files live under `docs/handoff/workstation-production-viability/`; `README.md` and `VENDOR_ENGAGEMENT.md` remain at the handoff root.

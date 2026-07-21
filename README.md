@@ -83,7 +83,7 @@ npm run start
 npm run lint
 npm run typecheck
 npm run test:e2e
-python -m graphify update . --force
+powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force
 ```
 
 ## Environment

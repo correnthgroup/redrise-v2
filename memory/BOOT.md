@@ -63,14 +63,14 @@ npm run start
 npm run lint
 npm run typecheck
 npm run test:e2e
-python -m graphify update . --force              # AST-only, zero token cost
-.\scripts\graphify-semantic.ps1 -Force           # semantic layer via OpenRouter (qwen-2.5-72b)
+powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force
 ```
 
 ## Known Blockers
 
-- Semantic extraction uses the central wrapper and `CORRENTH_GRAPHIFY_OPENROUTER_API_KEY` from the user environment. No Graphify credential belongs in `.env.local`.
-- RedRise Graphify output is canonical at `docs/graphify-out/`; use that path for cluster/query operations.
+- RedRise Graphify is AST-only. Semantic/LLM extraction is deprecated and stale semantic edges must be ignored unless a future ADR re-enables them.
+- Main Graphify policy lives in `D:\00_docs\AGENTS.md`; local RedRise rules live in `AGENTS.md`.
+- RedRise Graphify output is canonical at `docs/graphify-out/`; root `graphify-out/` is only temporary during rebuild and must not remain.
 - Durable Supabase/PostgreSQL and worker adapters are pending; the UI contract is complete against memory.
 - CML is external and global-only; the thin server adapter is present and becomes live when the official SDK package and server-side `CML_API_BASE_URL`/`CML_CONSUMER_ACCESS_TOKEN` are provisioned.
 - Legacy backend artifacts remain preserved until cleanup PRD.

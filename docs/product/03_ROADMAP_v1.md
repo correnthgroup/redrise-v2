@@ -42,7 +42,7 @@ The Workstation in-memory reference implementation is the active milestone. RedS
 - unit/integration tests
 - npm run build
 - npm run test:e2e
-- python -m graphify update . --force
+- powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force
 
 ## Next milestone
 

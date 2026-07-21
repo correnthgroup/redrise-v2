@@ -31,11 +31,11 @@ Context router for RedRise.
 - Update affected memory module.
 - Update `memory/TASK_LOG.md` with changes, validation, blockers, and graph status.
 - Run `npm run typecheck` and `npm run build` for code changes.
-- Run `python -m graphify update . --force` after structural changes when feasible.
+- Run `powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force` after structural changes when feasible.
 
 ## Memory Economics
 
 Context engineering lives in `AGENTS.md` under "Memory Economics". Use
 `graphify query`/`path`/`explain` for cross-file questions; reach for
-`Read`/`Grep` only for local single-file questions. Semantic layer lives in
-`docs/graphify-out/` (the single canonical RedRise Graphify output).
+`Read`/`Grep` only for local single-file questions. RedRise Graphify is
+AST-only and canonical output lives in `docs/graphify-out/`.

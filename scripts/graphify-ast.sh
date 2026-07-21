@@ -1,16 +1,14 @@
 #!/usr/bin/env bash
-# Compatibility entrypoint. Semantic extraction is deprecated for RedRise;
-# this script runs the AST-only canonical rebuild instead.
-
 set -euo pipefail
 
 TARGET="."
 FORCE=""
+
 for arg in "$@"; do
   case "$arg" in
     --force|-Force) FORCE="-Force" ;;
     -h|--help)
-      echo "Usage: $0 [--force]"
+      echo "Usage: $0 [target] [--force]"
       exit 0
       ;;
     *) TARGET="$arg" ;;

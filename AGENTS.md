@@ -19,7 +19,7 @@
 - Domain code in `src/domains/`.
 - Supabase Auth is reused for foundation auth; Workstation business behavior runs through async ports and an in-memory adapter; durable persistence is pending.
 - Package manager: npm.
-- Knowledge graph: `graphifyy[openai]` (Python, AST-only default, OpenRouter opt-in).
+- Knowledge graph: Graphify AST-only. Semantic/LLM Graphify is deprecated for RedRise unless a future ADR re-enables it.
 
 ## Active Sources Of Truth
 
@@ -42,8 +42,7 @@ npm run start
 npm run lint
 npm run typecheck
 npm run test:e2e
-python -m graphify update . --force              # AST-only, zero token cost
-powershell -ExecutionPolicy Bypass -File D:\Invoke-CorrenthGraphify.ps1 -Path . -Mode semantic
+powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force
 ```
 
 ## Current Entry Points
@@ -67,7 +66,7 @@ powershell -ExecutionPolicy Bypass -File D:\Invoke-CorrenthGraphify.ps1 -Path . 
 
 - RedScale does not exist in RedRise.
 - CML is an external, global-only Correnth platform; product integration is server-only through the official SDK.
-- Graphify remains the product-specific code/document context layer.
+- Graphify remains the product-specific AST code/document discovery layer.
 - Customer-specific and sensitive content is excluded from global CML by default.
 
 ## Implemented Scope
@@ -109,9 +108,14 @@ powershell -ExecutionPolicy Bypass -File D:\Invoke-CorrenthGraphify.ps1 -Path . 
 
 ## Graphify
 
-- Use graphify for cross-file relationship questions and after structural changes when feasible.
-- Structural graph update command: `python -m graphify update . --force`.
-- Semantic layer lives in `docs/graphify-out/` (the single canonical RedRise Graphify output).
+- Main workspace policy: `D:\00_docs\AGENTS.md`.
+- Use Graphify for cross-file relationship questions and after structural changes when feasible.
+- RedRise uses project-local Graphify only; never run Graphify from `D:\`.
+- RedRise Graphify is AST-only. Ignore old semantic/LLM extraction and stale semantic edges.
+- Canonical output lives only in `docs/graphify-out/`.
+- Rebuild command: `powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force`.
+- The script runs `graphify update <repo-root> --force`, lets Graphify create root `graphify-out/`, then moves it to `docs/graphify-out/`.
+- Do not keep or commit root `graphify-out/`, `.graphify-quarantine/`, or generated graph outputs as input corpus.
 
 ## Memory Economics
 
@@ -146,7 +150,7 @@ graphify explain "SymbolOrConcept"     # one node, its edges, source
 
 Only fall back to `Read`/`Grep` when the question is local to one file or
 when the graph has not been built for the area being touched. After
-structural changes, run `python -m graphify update . --force`.
+structural changes, run `powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force`.
 
 ### Cache protection
 
@@ -157,47 +161,11 @@ team use.
 
 ### Backend policy
 
-- `python -m graphify update . --force` is the default. It is AST-only and
-  consumes no LLM tokens.
-- For the optional semantic pass on docs, use Ollama local (qwen2.5:3b):
-  ```bash
-  powershell -ExecutionPolicy Bypass -File D:\Invoke-CorrenthGraphify.ps1 -Path . -Mode semantic
-  ```
-  Zero token cost. Runs on your GPU/CPU. Env vars: `OLLAMA_BASE_URL`,
-  `OLLAMA_MODEL`. See `.env.example` for the full list.
-- For the optional semantic pass on docs, use OpenRouter through the
-  OpenAI-compatible backend as a cloud fallback:
-  ```bash
-  # The central wrapper injects the user-scoped credential temporarily.
-  powershell -ExecutionPolicy Bypass -File D:\Invoke-CorrenthGraphify.ps1 -Path . -Mode semantic
-  ```
-  Env vars are documented in `.env.example`. Do not default to the
-  Gemini backend; OpenRouter is the configured path for this project.
-
-### Updating the Semantic Layer
-
-The semantic layer lives in `docs/graphify-out/` and adds LLM-extracted
-relationships (INFERRED edges) on top of the AST-only code graph.
-
-**When to update:**
-- After adding or modifying docs in `docs/`, `memory/`, or PRDs
-- After major structural refactors that change cross-file relationships
-- Before starting a new feature block (to give the agent fresh context)
-
-**Full rebuild (recommended):**
-```powershell
-.\scripts\graphify-semantic.ps1 -Force
-```
-This runs the central Graphify wrapper on the
-whole project, merges results into `docs/graphify-out/`, cleans up stray
-sub-graphs, and re-clusters.
-
-**Incremental update (AST only, zero cost):**
-```bash
-python -m graphify update . --force
-```
-Re-extracts only changed code files. No LLM call. Safe to run after every
-commit.
+- The only active RedRise Graphify mode is AST-only.
+- Use `powershell -ExecutionPolicy Bypass -File .\scripts\graphify-ast.ps1 -Force`.
+- `scripts\graphify-semantic.ps1` and `scripts\graphify-semantic.sh` are compatibility shims that run AST-only and warn that semantic extraction is deprecated.
+- Do not use `D:\Invoke-CorrenthGraphify.ps1 -Mode semantic` for RedRise unless a future ADR explicitly re-enables semantic extraction.
+- If root `graphify-out/` appears, move it to `docs/graphify-out/` only after a successful AST-only rebuild; otherwise delete/quarantine it and do not promote partial output.
 
 **Querying the graph:**
 ```bash
